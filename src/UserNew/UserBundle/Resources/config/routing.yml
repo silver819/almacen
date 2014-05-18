@@ -1,0 +1,7 @@
+user_new_user_homepage:
+    pattern:  /
+    defaults: { _controller: UserNewUserBundle:Default:index }
+
+login_check:
+    pattern: /login_check
+    defaults: { _controller: UserNewUserBundle:Default:index }

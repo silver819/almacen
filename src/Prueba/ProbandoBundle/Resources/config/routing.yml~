@@ -1,0 +1,7 @@
+prueba_probando_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: PruebaProbandoBundle:Default:index }
+
+mail:
+    pattern:  /hello/{name}
+    defaults: { _controller: PruebaProbandoBundle:Default:enviarMail }

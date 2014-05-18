@@ -1,0 +1,7 @@
+reservable_activity_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: ReservableActivityBundle:Default:index }
+
+new_reservable_activity:
+    pattern:  /new-activity/
+    defaults: { _controller: ReservableActivityBundle:Default:createActivity }

@@ -1,0 +1,13 @@
+# src/Acme/StoreBundle/Resources/config/doctrine/Product.mongodb.yml
+User\UserBundle\Document\User:
+    fields:
+        id:
+            id: true
+        name:
+            type: string
+        surname:
+            type: string
+        email:
+            type: string
+        password:
+            type: string

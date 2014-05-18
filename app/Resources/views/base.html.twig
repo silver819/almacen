@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}PFC{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{ asset('bundles/css/main.css') }}" filter="cssrewrite" type="text/css" rel="stylesheet">
+        {% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('bundles/javascript/jquery-1.11.1.min.js') }}"></script>
+            <script src="{{ asset('bundles/javascript/main.js') }}"></script>
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('images/attention.png') }}" />
+    </head>
+    <body>
+        <header>
+            {% block header %}{% endblock %}
+        </header>
+        <section>
+            {% block content %}{% endblock %}
+        </section>
+        <footer>
+            {% block footer %}{% endblock %}
+        </footer>
+    </body>
+</html>

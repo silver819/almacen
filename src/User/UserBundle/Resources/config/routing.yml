@@ -1,0 +1,11 @@
+user_user_homepage:
+    pattern:  /user/
+    defaults: { _controller: UserUserBundle:Default:index }
+
+user_create_user:
+    pattern: /new-user/
+    defaults: {_controller: UserUserBundle:Default:newUser}
+
+insertUser:
+    pattern: /register-user/
+    defaults: {_controller: UserUserBundle:Default:insertUser}

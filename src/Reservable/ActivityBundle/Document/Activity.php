@@ -1,0 +1,91 @@
+<?php
+namespace Reservable\ActivityBundle\Document;
+
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+
+/**
+ * @MongoDB\Document
+ */
+class Activity
+{
+    /**
+     * @MongoDB\Id(strategy="auto")
+     */
+    protected $id;
+
+    /**
+     * @MongoDB\Field(type="string")
+     *
+     * @Assert\NotBlank(message="Es necesario indicar el nombre.", groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max="255",
+     *     minMessage="El nombre es demasiado corto, debe tener más de 3 caracteres",
+     *     maxMessage="El nombre es demasiado largo, debe tener menos de 255 caracteres.",
+     *     groups={"Registration", "Profile"}
+     * )
+     */
+    protected $name;
+    /**
+     * @var float $price
+     */
+    protected $price;
+
+
+    /**
+     * Get id
+     *
+     * @return id $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return self
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string $name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return self
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float $price
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+}

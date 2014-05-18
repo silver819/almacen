@@ -1,0 +1,31 @@
+acme_store_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: AcmeStoreBundle:Default:index }
+
+acme_product:
+    pattern:  /create-product
+    defaults: { _controller: AcmeStoreBundle:Default:create }
+
+acme_product_form:
+    pattern:  /form-create-product
+    defaults: { _controller: AcmeStoreBundle:Default:createProductForm }
+
+submitFormProduct:
+    pattern:  /submitProduct
+    defaults: { _controller: AcmeStoreBundle:Default:submitFormProduct }
+
+ProductCreated:
+    pattern:  /productCreated
+    defaults: { _controller: AcmeStoreBundle:Default:productCreatedOK }
+
+acme_product_show:
+    pattern:  /show_products/{id}
+    defaults: { _controller: AcmeStoreBundle:Default:show }
+
+acme_product_update:
+    pattern:  /update_product/{id}
+    defaults: { _controller: AcmeStoreBundle:Default:update }
+
+acme_product_update:
+    pattern:  /delete_product/{id}
+    defaults: { _controller: AcmeStoreBundle:Default:delete }

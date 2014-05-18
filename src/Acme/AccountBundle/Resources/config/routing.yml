@@ -1,0 +1,7 @@
+acme_account_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: AcmeAccountBundle:Default:index }
+
+acme_create_account:
+    pattern:  /create_account
+    defaults: { _controller: AcmeAccountBundle:Default:create }

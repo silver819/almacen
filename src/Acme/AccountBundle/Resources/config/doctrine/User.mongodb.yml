@@ -1,0 +1,12 @@
+Acme\AccountBundle\Document\User:
+    fields:
+        id:
+            id:  true
+        name:
+            type: string
+        surname:
+            type: string
+        tfno:
+            type:float
+        email:
+            type: string

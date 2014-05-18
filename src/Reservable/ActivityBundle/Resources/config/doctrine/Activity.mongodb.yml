@@ -1,0 +1,8 @@
+Reservable\ActivityBundle\Document\Activity:
+    fields:
+        id:
+            id:  true
+        name:
+            type: string
+        price:
+            type: float
