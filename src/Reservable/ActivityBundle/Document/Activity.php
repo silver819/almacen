@@ -31,6 +31,7 @@ class Activity
     protected $name;
     /**
      * @var float $price
+     * @Assert\NotBlank(message="Es necesario indicar el precio")
      */
     protected $price;
 
