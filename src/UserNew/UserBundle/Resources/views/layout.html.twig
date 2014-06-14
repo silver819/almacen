@@ -1,16 +1,5 @@
 {% extends '::base.html.twig' %}
 
-{% block header %}
-    <div id=headerTitle>
-        <h1><a href="{{ path('user_new_user_homepage') }}">El Almacén</a></h1>
-    </div>
-    <div id=headerInfo>
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} &nbsp; <a href="{{ path('fos_user_profile_show') }}"><img src="{{ asset('images/male12.png') }}" width="18" alt="Ver perfil" title="Ver perfil"></a> | <a href="{{ path('fos_user_profile_edit') }}"><img src="{{ asset('images/drawing4.png') }}" width="15" alt="Modificar perfil" title="Modificar perfil"></a> | <a href="{{ path('fos_user_security_logout') }}"><img src="{{ asset('images/sign4.png') }}" width="25" alt="Salir" title="Salir"></a>
-        {% endif %}
-    </div>
-{% endblock %}
-
 {% block content %}
     {% for type, messages in app.session.flashbag.all() %}
         {% for message in messages %}
@@ -24,8 +13,4 @@
         {% block fos_user_content %}
         {% endblock fos_user_content %}
     </div>
-{% endblock %}
-
-{% block footer %}
-<div>Pie de página</div>
 {% endblock %}

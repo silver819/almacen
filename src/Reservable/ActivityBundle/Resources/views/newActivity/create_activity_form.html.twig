@@ -1,9 +1,22 @@
-{% extends '::base.html.twig' %}
+{% extends '::admin.html.twig' %}
 
-{% block content %}
+{% block workZone %}
+	<h2>Nueva actividad</h2>
 	<form action="{{ path('submitActivity')}}" method="post" {{ form_enctype(form) }}>
-	    {{ form_widget(form) }}
+		{{ bootstrap_set_style('horizontal') }}
 
-	    <input type="submit" value="Registrar actividad"/>
+		{{ form_errors(form) }}
+
+	    {{ form_row(form.name, {'label': 'Nombre', 'input_group': {'append': 'Abc'}}) }}
+	    <br/><br/>
+	    {{ form_row(form.price, {'label': 'Precio', 'input_group': {'append': ' € '}}) }}
+
+	    {# <input type="submit" value="Registrar actividad"/> #}
+		<br/><br/>
+
+		<div class="text-center"> 
+	    	<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-inbox"></i>&nbsp;Registrar actividad</button>
+	    </div>
+	    <br/>
 	</form>
 {% endblock %}

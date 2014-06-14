@@ -1,51 +1,7 @@
-{% extends '::base.html.twig' %}
+{% extends '::admin.html.twig' %}
 
-{% block header %}
-    <div id=headerTitle>
-        <h1><a href="{{ path('user_new_user_homepage') }}">El Almacén</a></h1>
-    </div>
-    <div id=headerInfo>
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} &nbsp; <a href="{{ path('fos_user_profile_show') }}"><img src="{{ asset('images/male12.png') }}" width="18" alt="Ver perfil" title="Ver perfil"></a> | <a href="{{ path('fos_user_profile_edit') }}"><img src="{{ asset('images/drawing4.png') }}" width="15" alt="Modificar perfil" title="Modificar perfil"></a> | <a href="{{ path('fos_user_security_logout') }}"><img src="{{ asset('images/sign4.png') }}" width="25" alt="Salir" title="Salir"></a>
-        {% endif %}
-    </div>
-{% endblock %}
-
-{% block content %}
-	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
-            Menú superadministrador
-        {% endif %}
-        {% if is_granted('ROLE_ADMIN') %}
-            <div class="menuDiv menuProp">
-                <h2>Menú propietario</h2>
-                <ul>
-                   <div><a href="{{ path('new_reservable_activity') }}">Nueva instalación</a></div>
-                   <div><a href="#">Ver instalaciones</a></div>
-                </ul>
-            </div>
-        {% endif %}
-        {% if is_granted('ROLE_USER') %}
-            <div class="menuDiv menuUser">
-                <h2>Menú usuario</h2>
-                <ul>
-                   <div><a href="#">Fútbol</a></div>
-                   <div><a href="#">Tenis</a></div>
-                   <div><a href="#">Piscina</a></div>
-                </ul>
-            </div>
-        {% endif %}
-    {% else %}
-    	<div class="loginDiv">
-        	<a class="loginLink" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-        </div>
-        <div class="registerDiv">
-        	<a class="registerLink" href="{{ path('fos_user_registration_register') }}">{{ 'Registrar'|trans({}, 'FOSUserBundle') }}</a>
-        </div>
-    {% endif %}
-    <div class="clear"></div>
-{% endblock %}
-
-{% block footer %}
-<div>Pie de página</div>
+{% block workZone %}
+    /************************/<br/>
+    /* Zona de trabajo */<br/>
+    /************************/
 {% endblock %}

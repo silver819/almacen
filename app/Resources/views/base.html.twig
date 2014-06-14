@@ -3,24 +3,67 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}PFC{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% block stylesheets %}
             <link href="{{ asset('bundles/css/main.css') }}" filter="cssrewrite" type="text/css" rel="stylesheet">
+            <!-- Bootstrap -->
+            <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
         {% endblock %}
         {% block javascripts %}
             <script src="{{ asset('bundles/javascript/jquery-1.11.1.min.js') }}"></script>
             <script src="{{ asset('bundles/javascript/main.js') }}"></script>
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('images/attention.png') }}" />
+
+        <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+        {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
     </head>
     <body>
-        <header>
-            {% block header %}{% endblock %}
-        </header>
-        <section>
-            {% block content %}{% endblock %}
-        </section>
-        <footer>
-            {% block footer %}{% endblock %}
-        </footer>
+        <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
+        <script src="{{ asset('js/jquery.js') }}"></script>
+        <!-- Include all JavaScripts, compiled by Assetic -->
+        <script src="{{ asset('js/bootstrap.js') }}"></script>
+
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="navbar-header">
+                             </button> <a class="navbar-brand" href="{{ path('user_new_user_homepage') }}">Almacen</a>
+                        </div>
+
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            <ul class="nav navbar-nav navbar-right" >
+                                <li class="dropdown">
+                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}<strong class="caret"></strong></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{{ path('fos_user_profile_show') }}"><img src="{{ asset('images/male12.png') }}" width="18" alt="Ver perfil" title="Ver perfil">&nbsp;Ver perfil</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('fos_user_profile_edit') }}"><img src="{{ asset('images/drawing4.png') }}" width="15" alt="Modificar perfil" title="Modificar perfil">&nbsp;Modificar perfil</a>
+                                        </li>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a href="{{ path('fos_user_security_logout') }}"><img src="{{ asset('images/sign4.png') }}" width="25" alt="Salir" title="Salir">&nbsp;Salir</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <section>
+                    {% block content %}{% endblock %}
+                </section>
+            </div>
+            <div class="row clearfix">
+                Pie de página
+            </div>
+        </div>
     </body>
 </html>
