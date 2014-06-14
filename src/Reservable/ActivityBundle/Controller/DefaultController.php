@@ -44,4 +44,16 @@ class DefaultController extends Controller
 		//return new Response('Actividad guardada.');
 		return $this->render('ReservableActivityBundle:newActivity:activity_form_success.html.twig');
 	}
+
+	public function viewActivitiesAction(){
+		$repository = $this->get('doctrine_mongodb')
+	    ->getManager()
+	    ->getRepository('ReservableActivityBundle:Activity');
+
+		// query by the primary key (usually "id")
+		$product = $repository->find('5392d71322c0e78728c33045');
+		$product = '';
+
+		return $this->render('ReservableActivityBundle:Default:view_activities.html.twig', array('products'=>$product));
+	}
 }

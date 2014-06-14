@@ -13,3 +13,7 @@ submitActivity:
 ActivityRegistered:
     pattern:  /activityRegistered
     defaults: { _controller: ReservableActivityBundle:Default:activityRegistered }
+
+ViewActivities:
+    pattern:  /view-instalations
+    defaults: { _controller: ReservableActivityBundle:Default:viewActivities }
