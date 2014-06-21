@@ -6,3 +6,7 @@ Reservable\ActivityBundle\Document\Activity:
             type: string
         price:
             type: float
+        typeRent:
+            type: string
+        ownerID:
+            type: string

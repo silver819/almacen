@@ -1,6 +1,15 @@
 {% extends '::admin.html.twig' %}
 
 {% block workZone %}
+	<ul class="nav nav-tabs">
+		<li>
+			<a href="{{ path('ViewActivities') }}">Mis actividades</a>
+		</li>
+		<li class="active">
+			<a href="#">Añadir actividad <img src="{{ asset('images/add50.png') }}" width="10" alt="Añadir actividad" title="Añadir actividad"></a>
+		</li>
+	</ul>
+
 	<h2>Nueva instalación</h2>
 	<form action="{{ path('submitActivity')}}" method="post" {{ form_enctype(form) }}>
 		{{ bootstrap_set_style('horizontal') }}
@@ -9,7 +18,19 @@
 
 	    {{ form_row(form.name, {'label': 'Nombre', 'input_group': {'append': 'Abc'}}) }}
 	    <br/><br/>
-	    {{ form_row(form.price, {'label': 'Precio', 'input_group': {'append': ' € '}}) }}
+
+	    {{ form_row(form.price, {'label': 'Precio', 
+	    						 'input_group': {'append': ' € '},
+	    						 'label_col': 2, 
+	    						 'widget_col': 6}) }}
+
+	    {{ form_row(form.typeRent, {'label': 'por',
+	    							'label_col': 1, 
+	    						 	'widget_col': 3}) }}
+
+
+		{{ form_row(form.ownerID) }}
+		{{ form_widget(form._token) }}
 
 	    {# <input type="submit" value="Registrar instalación"/> #}
 		<br/><br/>

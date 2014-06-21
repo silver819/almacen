@@ -5,6 +5,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+use UserNew\UserBundle\Document\User;
 
 /**
  * @MongoDB\Document
@@ -34,11 +35,13 @@ class Activity
      * @Assert\NotBlank(message="Es necesario indicar el precio")
      */
     protected $price;
+
     /**
-     * @var string $rent
-     * @Assert\NotBlank(message="Es necesario indicar el tipo de alquiler")
+     * @MongoDB\Field(type="string")
+     *
+     * @Assert\NotBlank(message="Usuario no encontrado.", groups={"Registration", "Profile"})
      */
-    protected $rent;
+    protected $ownerID;
 
 
     /**
@@ -93,5 +96,27 @@ class Activity
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set ownerID
+     *
+     * @param string $ownerID
+     * @return self
+     */
+    public function setOwnerID($ownerID)
+    {
+        $this->ownerID = $ownerID;
+        return $this;
+    }
+
+    /**
+     * Get ownerID
+     *
+     * @return string $ownerID
+     */
+    public function getOwnerID()
+    {
+        return $this->ownerID;
     }
 }

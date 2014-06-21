@@ -17,6 +17,8 @@ class DefaultController extends Controller
     public function createActivityAction()
     {
 		$activity = new Activity();
+        $activity->setOwnerID($this->get('security.context')->getToken()->getUser()->getId());
+
 		$form = $this->createForm(new ActivityType(), $activity);
 
     	return $this ->render('ReservableActivityBundle:newActivity:create_activity_form.html.twig', array('form'=>$form->CreateView()));
@@ -50,9 +52,10 @@ class DefaultController extends Controller
 	    ->getManager()
 	    ->getRepository('ReservableActivityBundle:Activity');
 
-		// query by the primary key (usually "id")
-		$product = $repository->find('5392d71322c0e78728c33045');
-		$product = '';
+		// The query
+		$product = $repository->findBy(
+    		array('ownerID' => $this->get('security.context')->getToken()->getUser()->getId())
+    	);
 
 		return $this->render('ReservableActivityBundle:Default:view_activities.html.twig', array('products'=>$product));
 	}

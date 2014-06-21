@@ -1,5 +1,10 @@
-{% extends '::base.html.twig' %}
+{% extends '::admin.html.twig' %}
 
-{% block content %}
-	¡La actividad ha sido registrada con exito!
+{% block workZone %}
+	<h2>Nueva instalación</h2>
+	<div class="alert alert-success text-center">
+		<h4>¡La actividad ha sido registrada con exito!</h4>
+
+		<p><a class="alertAnchor" href="{{ path('ViewActivities') }}">Ver todas las instalaciones</a></p>
+    </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 <?php
-// src/Acme/TaskBundle/Form/Type/TaskType.php
+
 namespace Reservable\ActivityBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -13,6 +13,11 @@ class ActivityType extends AbstractType
     {
         $builder->add('name');
         $builder->add('price');
+        $builder->add('typeRent', 'choice', array(
+            'choices'   => array('hour' => 'hora', 'day' => 'día'),
+            'required'  => true,
+        ));
+        $builder->add('ownerID', 'hidden');
     }
 
     public function getName()

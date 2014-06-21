@@ -12,8 +12,8 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <h3>Menú propietario</h3>
                 <ul class="adminList">
-                    <li><a href="{{ path('new_reservable_activity') }}">Nueva instalación</a></li>
-                    <li><a href="{{ path('ViewActivities') }}">Ver instalaciones</a></li>
+                    <li><a href="{{ path('ViewActivities') }}">Mis instalaciones</a></li>
+                    <li><a href="">Mis reservas</a></li>
                 </ul>
             {% endif %}   
             {% if is_granted('ROLE_USER') %}

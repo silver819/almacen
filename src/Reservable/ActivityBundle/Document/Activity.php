@@ -35,6 +35,21 @@ class Activity
      */
     protected $price;
 
+    /**
+     * @MongoDB\Field(type="string")
+     *
+     * @Assert\NotBlank(message="Usuario no encontrado.", groups={"Registration", "Profile"})
+     * @MongoDB\ReferenceOne(targetDocument="User")
+     */
+    protected $ownerID;
+
+    /**
+     * @MongoDB\Field(type="string")
+     *
+     * @Assert\NotBlank(message="Seleccione un tipo.")
+     */
+    protected $typeRent;
+
 
     /**
      * Get id
@@ -88,5 +103,49 @@ class Activity
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set ownerID
+     *
+     * @param string $ownerID
+     * @return self
+     */
+    public function setOwnerID($ownerID)
+    {
+        $this->ownerID = $ownerID;
+        return $this;
+    }
+
+    /**
+     * Get ownerID
+     *
+     * @return string $ownerID
+     */
+    public function getOwnerID()
+    {
+        return $this->ownerID;
+    }
+
+    /**
+     * Set typeRent
+     *
+     * @param string $typeRent
+     * @return self
+     */
+    public function setTypeRent($typeRent)
+    {
+        $this->typeRent = $typeRent;
+        return $this;
+    }
+
+    /**
+     * Get typeRent
+     *
+     * @return string $typeRent
+     */
+    public function gettypeRent()
+    {
+        return $this->typeRent;
     }
 }
