@@ -1,11 +1,73 @@
-{% block content -%}
-    <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal fos_user_registration_register" role="form">
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <div class="col-md-3 column adminBar">
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <h3>Menú superusuario</h3>
+                <ul class="adminList">
+                    <li><a href="#">Gestionar usuarios</a></li>
+                </ul>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <h3>Menú propietario</h3>
+                <ul class="adminList">
+                    <li><a href="{{ path('ViewActivities') }}">Mis instalaciones</a></li>
+                    <li><a href="">Mis reservas</a></li>
+                </ul>
+            {% endif %}   
+            {% if is_granted('ROLE_USER') %}
+                <h3>Menú usuario</h3>
+                <ul class="adminList">
+                    <li><a href="#">Fútbol</a></li>
+                    <li><a href="#">Tenis</a></li>
+                    <li><a href="#">Piscina</a></li>
+                </ul>
+           {% endif %}
+        </div>
+        <div class="col-md-9 column workZone">
+            {% block workZone %}{% endblock %}
+        </div>
+    {% else %}
+        <div class="col-md-8 column loginRegisterDiv">
+            <div id="mainSearcher">
+                <div id="tabs-container" class="block-tabs  widget-block-tabmain ">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#" data-toggle="tab">Buscar</a>
+                        </li>
+                    </ul>
+                    <div class="menuContent">
+                        Buscador
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 column">
+            <div id="loginRegisterDiv">
+                <div id="tabs-container" class="block-tabs  widget-block-tabmain ">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a href="{{ path('user_new_user_homepage') }}">Entrar</a>
+                        </li>
+                        <li class="active">
+                            <a href="#">Registrar</a>
+                        </li>
+                    </ul>
+                    <div class="menuContent">
+                        <div class="login">
+                            <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="form-horizontal fos_user_registration_register" role="form">
+
+
+
+
         {{ form_errors(form) }}
 
         {# Nombre #}
-        <div class="form-group{% if form.name.vars.errors[0].message is defined %} has-error{% endif %}">
+
             {{ form_label(form.name) }}
-            <div class="col-sm-10">
+            <br/>
+            <div >
                 {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
                 {% if form.username.vars.errors[0].message is defined %}
                 <span class="help-block">
@@ -13,12 +75,13 @@
                 </span>
                 {% endif %}
             </div>
-        </div>
+
 
         {# Apellidos #}
-        <div class="form-group{% if form.surname.vars.errors[0].message is defined %} has-error{% endif %}">
-            {{ form_label(form.surname, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            <div class="col-sm-10">
+
+            {{ form_label(form.surname) }}
+            <br/>
+            <div>
                 {{ form_widget(form.surname, {'attr': {'class': 'form-control'}}) }}
                 {% if form.surname.vars.errors[0].message is defined %}
                 <span class="help-block">
@@ -26,12 +89,13 @@
                 </span>
                 {% endif %}
             </div>
-        </div>
+
 
         {# Email #}
-        <div class="form-group{% if form.email.vars.errors[0].message is defined %} has-error{% endif %}">
-            {{ form_label(form.email, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            <div class="col-sm-10">
+
+            {{ form_label(form.email) }}
+            <br/>
+            <div>
                 {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
                 {% if form.email.vars.errors[0].message is defined %}
                 <span class="help-block">
@@ -39,12 +103,13 @@
                 </span>
                 {% endif %}
             </div>
-        </div>
+
 
         {# Nombre de usuario #}
-        <div class="form-group{% if form.username.vars.errors[0].message is defined %} has-error{% endif %}">
-            {{ form_label(form.username, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            <div class="col-sm-10">
+
+            {{ form_label(form.username) }}
+            <br/>
+            <div>
                 {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
                 {% if form.username.vars.errors[0].message is defined %}
                 <span class="help-block">
@@ -52,12 +117,13 @@
                 </span>
                 {% endif %}
             </div>
-        </div>
+
 
         {# Contraseña #}
-        <div class="form-group{% if form.plainPassword.first.vars.errors[0].message is defined %} has-error{% endif %}">
-            {{ form_label(form.plainPassword.first, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            <div class="col-sm-10">
+
+            {{ form_label(form.plainPassword.first) }}
+            <br/>
+            <div>
                 {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
                 {% if form.plainPassword.first.vars.errors[0].message is defined %}
                 <span class="help-block">
@@ -65,12 +131,13 @@
                 </span>
                 {% endif %}
             </div>
-        </div>
+
         
         {# Repite contraseña #}
-        <div class="form-group{% if form.plainPassword.second.vars.errors[0].message is defined %} has-error{% endif %}">
-            {{ form_label(form.plainPassword.second, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-            <div class="col-sm-10">
+
+            {{ form_label(form.plainPassword.second) }}
+            <br/>
+            <div>
                 {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
                 {% if form.plainPassword.second.vars.errors[0].message is defined %}
                 <span class="help-block">
@@ -78,10 +145,32 @@
                 </span>
                 {% endif %}
             </div>
-        </div>
+
 
         {# Submit #}
-        <button class="btn btn-primary" type="submit">{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}</button>
+
+        <button style="float:right;margin-top: 10px;" value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-inbox"></i>&nbsp;Registrar</button>
+
+        <div style="clear:both;"></div>
+
+
 
     {{ form_end(form) }}
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-12 column carruselContent">
+                Carrusel con actividades
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
