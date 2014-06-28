@@ -9,23 +9,21 @@
 			<a href="{{ path('new_reservable_activity') }}">Añadir actividad <img src="{{ asset('images/add50.png') }}" width="10" alt="Añadir actividad" title="Añadir actividad"></a>
 		</li>
 	</ul>
+	<div class="menuContent">
+		{% if products is empty %}
+			<div class="alert alert-danger text-center">
+		    	<h4>¡No tienes instalaciones registradas!</h4>
 
+		    	<p><a class="alertAnchor" href="{{ path('new_reservable_activity') }}">Registar aquí alguna instalación</a></p>
+		    </div>
+		{% else %}
+			{% for oneProduct in products %}
 
-	<h2>Instalaciones</h2>
-
-	{% if products is empty %}
-		<div class="alert alert-danger text-center">
-	    	<h4>¡No tienes instalaciones registradas!</h4>
-
-	    	<p><a class="alertAnchor" href="{{ path('new_reservable_activity') }}">Registar aquí alguna instalación</a></p>
-	    </div>
-	{% else %}
-		{% for oneProduct in products %}
-
-			<div class="productView alert alert-warning">
-	        	<h4><strong>{{ oneProduct.name }}</strong></h4>
-	        	{{ oneProduct.price }} / {{ oneProduct.typeRent }}
-	        </div>
-	    {% endfor %}
-	{% endif %}
+				<div class="productView alert alert-warning">
+		        	<h4><strong>{{ oneProduct.name }}</strong></h4>
+		        	{{ oneProduct.price }} / {{ oneProduct.typeRent }}
+		        </div>
+		    {% endfor %}
+		{% endif %}
+		</div>
 {% endblock %}

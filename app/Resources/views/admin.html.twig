@@ -30,18 +30,53 @@
         </div>
     {% else %}
         <div class="col-md-6 column loginRegisterDiv">
-            <a class="loginLink" href="{{ path('fos_user_security_login') }}">
-                <div class="btn-group btn-group-lg">
-                    <button class="btn btn-default" type="button"> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</button>
+            <div id="mainSearcher">
+                <div id="tabs-container" class="block-tabs  widget-block-tabmain ">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#" data-toggle="tab">Buscar</a>
+                        </li>
+                    </ul>
+                    <div class="menuContent">
+                        Buscador
+                    </div>
                 </div>
-            </a>                 
+            </div>
         </div>
         <div class="col-md-6 column loginRegisterDiv">
-            <a class="registerLink" href="{{ path('fos_user_registration_register') }}">
-                <div class="btn-group btn-group-lg">
-                    </button> <button class="btn btn-default" type="button"> {{ 'Registrar'|trans({}, 'FOSUserBundle') }}</button>
+            <div id="loginRegisterDiv">
+                <div id="tabs-container" class="block-tabs  widget-block-tabmain ">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#login" data-toggle="tab">Entrar</a>
+                        </li>
+                        <li>
+                            <a href="#register" data-toggle="tab">Registrar</a>
+                        </li>
+                    </ul>
+                    <div class="menuContent">
+                        <div id="login">
+                            <a class="loginLink" href="{{ path('fos_user_security_login') }}">
+                                <div class="btn-group btn-group-lg">
+                                    <button class="btn btn-default" type="button"> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</button>
+                                </div>
+                            </a> 
+                        </div>
+                        <div id="register">
+                            <a class="registerLink" href="{{ path('fos_user_registration_register') }}">
+                                <div class="btn-group btn-group-lg">
+                                    </button> <button class="btn btn-default" type="button"> {{ 'Registrar'|trans({}, 'FOSUserBundle') }}</button>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-12 column carruselContent">
+                Carrusel con actividades
+            </div>
         </div>
     {% endif %}
 {% endblock %}
