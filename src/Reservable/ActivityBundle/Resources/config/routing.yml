@@ -17,3 +17,15 @@ ActivityRegistered:
 ViewActivities:
     pattern:  /view-instalations
     defaults: { _controller: ReservableActivityBundle:Default:viewActivities }
+
+UploadPicture:
+    pattern: /upload-picture
+    defaults: { _controller: ReservableActivityBundle:Default:uploadFile }
+
+submitPicture:
+    pattern: /submit-picture
+    defaults: { _controller: ReservableActivityBundle:Default:submitUploadFile }
+
+pictureUploaded:
+    pattern: /picture-uploaded
+    defaults: { _controller: ReservableActivityBundle:Default:pictureUploaded }

@@ -5,7 +5,6 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
-use UserNew\UserBundle\Document\User;
 
 /**
  * @MongoDB\Document
@@ -40,8 +39,16 @@ class Activity
      * @MongoDB\Field(type="string")
      *
      * @Assert\NotBlank(message="Usuario no encontrado.", groups={"Registration", "Profile"})
+     * @MongoDB\ReferenceOne(targetDocument="User")
      */
     protected $ownerID;
+
+    /**
+     * @MongoDB\Field(type="string")
+     *
+     * @Assert\NotBlank(message="Seleccione un tipo.")
+     */
+    protected $typeRent;
 
 
     /**
@@ -118,5 +125,27 @@ class Activity
     public function getOwnerID()
     {
         return $this->ownerID;
+    }
+
+    /**
+     * Set typeRent
+     *
+     * @param string $typeRent
+     * @return self
+     */
+    public function setTypeRent($typeRent)
+    {
+        $this->typeRent = $typeRent;
+        return $this;
+    }
+
+    /**
+     * Get typeRent
+     *
+     * @return string $typeRent
+     */
+    public function gettypeRent()
+    {
+        return $this->typeRent;
     }
 }

@@ -5,6 +5,8 @@ namespace Reservable\ActivityBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Reservable\ActivityBundle\Document\Activity;
 use Reservable\ActivityBundle\Form\Type\ActivityType;
+use Reservable\ActivityBundle\Document\Picture;
+use Reservable\ActivityBundle\Form\Type\PictureType;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
@@ -59,4 +61,67 @@ class DefaultController extends Controller
 
 		return $this->render('ReservableActivityBundle:Default:view_activities.html.twig', array('products'=>$product));
 	}
+
+	public function uploadFileAction()
+    {
+		$picture 		= new Picture();
+		$pictureType 	= new PictureType();
+
+		$form = $this->createForm($pictureType, $picture);
+
+    	return $this ->render('ReservableActivityBundle:newPicture:upload_picture_form.html.twig', 
+    		array('form'=>$form->CreateView()));
+    }
+
+    public function submitUploadFileAction()
+    {
+/*
+$picture = new Picture();
+        $form = $this -> createForm(new PictureType(), $picture);
+
+        if($request->isMethod('POST'))
+        {
+            $form->bind($this->getRequest());
+            if($form->isValid())
+            {
+                $picture->upload();
+                $em = $this -> getDoctrine() -> getManager();
+                $em->persist($picture);
+                $em->flush();
+ 
+             }else
+            {
+                $this->get('session')->getFlashBag()->add('fail', 'Fallo en el envío del formulario');
+                return $this->redirect($this->generateUrl('acme_inicio_homepage'));
+            }
+        }
+
+        return $this->render('AcmeStoreBundle:Default:img.html.twig', array('pictureform' => $form->createView()));
+*/
+
+    	$dm = $this->get('doctrine_mongodb')->getManager();
+
+	    $form = $this->createForm(new PictureType());
+	    $form->bind($this->getRequest());
+
+	    if ($form->isValid()) {
+	        $picture = $form->getData();
+
+			$picture->upload();
+
+	        $dm->persist($picture);
+	        $dm->flush();
+
+			return $this->redirect('picture-uploaded');
+	    }
+
+	    return $this->render('ReservableActivityBundle:newPicture:upload_picture_form.html.twig', 
+	    	array('form'=>$form->CreateView()));
+    }
+
+    public function pictureUploadedAction()
+    {
+    	return $this->render('ReservableActivityBundle:newPicture:upload_picture_success.html.twig');
+    }
+
 }

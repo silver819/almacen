@@ -1,0 +1,8 @@
+Reservable\ActivityBundle\Document\Picture:
+    fields:
+        id:
+            id:  true
+        picPath:
+            type: string
+        picFile:
+            type: file
