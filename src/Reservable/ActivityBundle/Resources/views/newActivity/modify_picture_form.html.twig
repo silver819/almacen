@@ -1,0 +1,15 @@
+{% extends '::admin.html.twig' %}
+
+{% block workZone %}
+	<ul class="nav nav-tabs">
+		<li>
+			<a href="{{ path('ViewActivities') }}">Mis actividades</a>
+		</li>
+		<li class="active">
+			<a href="#">Añadir actividad <img src="{{ asset('images/add50.png') }}" width="10" alt="Añadir actividad" title="Añadir actividad"></a>
+		</li>
+	</ul>
+	<div class="menuContent">
+
+	</div>
+{% endblock %}

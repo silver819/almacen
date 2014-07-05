@@ -49,6 +49,8 @@ class DefaultController extends Controller
 		return $this->render('ReservableActivityBundle:newActivity:activity_form_success.html.twig');
 	}
 
+    
+
 	public function viewActivitiesAction(){
 		$repository = $this->get('doctrine_mongodb')
 	    ->getManager()
@@ -61,6 +63,36 @@ class DefaultController extends Controller
 
 		return $this->render('ReservableActivityBundle:Default:view_activities.html.twig', array('products'=>$product));
 	}
+
+    public function modifyActivitiesAction(){
+        foreach($_POST as $key => $value){
+            if($key == 'productID'){
+                $id = $value;
+            }
+
+            if($key == 'newPrice' && !empty($value)){
+                $price = $value;
+            }
+        }
+
+
+        $dm      = $this->get('doctrine_mongodb')->getManager();
+        $product = $dm->getRepository('ReservableActivityBundle:Activity')->find($id);
+
+        if(!empty($price)) $product->setPrice($price);
+        
+        $dm->flush();
+
+        // The query
+        $repository = $this->get('doctrine_mongodb')
+        ->getManager()
+        ->getRepository('ReservableActivityBundle:Activity');
+        $all = $repository->findBy(
+            array('ownerID' => $this->get('security.context')->getToken()->getUser()->getId())
+        );
+
+        return $this->render('ReservableActivityBundle:Default:view_activities.html.twig', array('products'=>$all));
+    }
 
 	public function uploadFileAction()
     {

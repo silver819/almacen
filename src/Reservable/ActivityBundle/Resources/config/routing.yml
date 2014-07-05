@@ -18,6 +18,10 @@ ViewActivities:
     pattern:  /view-instalations
     defaults: { _controller: ReservableActivityBundle:Default:viewActivities }
 
+modifyActivities:
+    pattern:  /modify-instalations
+    defaults: { _controller: ReservableActivityBundle:Default:modifyActivities }
+
 UploadPicture:
     pattern: /upload-picture
     defaults: { _controller: ReservableActivityBundle:Default:uploadFile }
