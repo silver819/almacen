@@ -69,9 +69,11 @@ class DefaultController extends Controller
             if($key == 'productID'){
                 $id = $value;
             }
-
-            if($key == 'newPrice' && !empty($value)){
+            else if($key == 'newPrice' && !empty($value) && is_numeric($value)){
                 $price = $value;
+            }
+            else if($key == 'newName' && !empty($value) && is_string($value)){
+                $name = $value;
             }
         }
 
@@ -80,6 +82,7 @@ class DefaultController extends Controller
         $product = $dm->getRepository('ReservableActivityBundle:Activity')->find($id);
 
         if(!empty($price)) $product->setPrice($price);
+        if(!empty($name))  $product->setName($name);
         
         $dm->flush();
 
@@ -107,30 +110,6 @@ class DefaultController extends Controller
 
     public function submitUploadFileAction()
     {
-/*
-$picture = new Picture();
-        $form = $this -> createForm(new PictureType(), $picture);
-
-        if($request->isMethod('POST'))
-        {
-            $form->bind($this->getRequest());
-            if($form->isValid())
-            {
-                $picture->upload();
-                $em = $this -> getDoctrine() -> getManager();
-                $em->persist($picture);
-                $em->flush();
- 
-             }else
-            {
-                $this->get('session')->getFlashBag()->add('fail', 'Fallo en el envío del formulario');
-                return $this->redirect($this->generateUrl('acme_inicio_homepage'));
-            }
-        }
-
-        return $this->render('AcmeStoreBundle:Default:img.html.twig', array('pictureform' => $form->createView()));
-*/
-
     	$dm = $this->get('doctrine_mongodb')->getManager();
 
 	    $form = $this->createForm(new PictureType());
