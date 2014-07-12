@@ -38,6 +38,24 @@ class DefaultController extends Controller
 	        $dm->persist($registration);
 	        $dm->flush();
 
+            // Envio correo electronico test
+            $mensaje = new \Swift_Message();
+
+            $text  = '<h1>Nueva actividad registrada</h1><br/><br/>';
+            $text .= '<strong>Nombre</strong>: ' . $registration->getName();
+            $text .= '<br/><strong>Precio</strong>: ' . $registration->getPrice() . ' €';
+            $text .= '<br/><br/><p><a href="http://almacen.dev/app_dev.php/view-instalations">Click aquí para ver sus instalaciones</a></p>';
+
+            $userEmail = $this->get('security.context')->getToken()->getUser()->getEmail();;
+
+            $mensaje->setContentType ('text/html')
+                    ->setSubject ('Nueva instalación en Almacen.Dev')
+                    ->setFrom('almacenpfcs@gmail.com')
+                    ->setTo($userEmail)
+                    ->setBody($text);
+            
+            $this->get('mailer')->send($mensaje);
+
 			return $this->redirect('activityRegistered');
 	    }
 
@@ -52,19 +70,6 @@ class DefaultController extends Controller
     
 
 	public function viewActivitiesAction(){
-        // Envio correo electronico test
-        $mensaje = new \Swift_Message();
-
-        $mensaje->setContentType ('text/plain')
-                ->setSubject ('test PFC')
-                ->setFrom('almacenpfcs@gmail.com')
-                ->setTo('silver819@gmail.com')
-                ->setBody('Este es un mensaje enviado desde Symfony');
-        
-        $this->get('mailer')->send($mensaje);
-
-        // Ver actividades
-
 		$repository = $this->get('doctrine_mongodb')
 	    ->getManager()
 	    ->getRepository('ReservableActivityBundle:Activity');
