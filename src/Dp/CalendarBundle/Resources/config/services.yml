@@ -1,0 +1,7 @@
+parameters:
+#    dp_calendar.example.class: Dp\CalendarBundle\Example
+
+services:
+#    dp_calendar.example:
+#        class: %dp_calendar.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,7 @@
+{% extends "DpCalendarBundle::layout.html.twig" %}
+
+{% block body %}
+
+{{ render(controller('DpCalendarBundle:Default:calendarDisplay', { 'admin': false })) }}
+
+{% endblock %}

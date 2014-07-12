@@ -1,0 +1,106 @@
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+<script>
+    
+cal1 = $('#calendrier');
+    
+function tableau(mois,annee, cal)
+{
+    cal.css('display', 'none');
+    var url = "{{ path('dp_calendar_ajax') }}";
+    var click_suivant;
+    var click_precedent;
+    $.post(url,{
+        month: mois,
+        year: annee
+       },function(data){
+           //the response is in the data variable
+   
+            if(data.responseCode==200 ){
+                $('#link_suivant').unbind('click');
+                $('#link_precedent').unbind('click');
+                click_suivant = new Function(data.lien_suivant);
+                click_precedent = new Function(data.lien_precedent);
+                $('#link_suivant').attr('onclick', '').click(click_suivant);
+                $('#link_precedent').attr('onclick', '').click(click_precedent);
+                $('#titre').html(data.mois_en_cours);
+                //Maintenant, on affiche tous les jours du calendrier
+                var compteur=1;
+                while(compteur<43){
+                    $('#cell_'+compteur).html(data.calendrier[(compteur-1)].fill);
+                    compteur++;
+                }
+                cal.css('display', 'block');
+            }
+           else if(data.responseCode==400){//bad request
+               $('#output').html(data.greeting);
+               $('#output').css("color","red");
+           }
+           else{
+              //if we got to this point we know that the controller
+              //did not return a json_encoded array. We can assume that           
+              //an unexpected PHP error occured
+              alert("An unexpeded error occured.");
+
+              //if you want to print the error:
+              $('#output').html(data);
+           }
+       });//It is silly. But you should not write 'json' or any thing as the fourth parameter. It should be undefined. I'll explain it futher down
+
+      //we dont what the browser to submit the form
+      return false;
+}
+    
+$(window).load(function(){
+    tableau({{ month }}, {{ year }}, cal1);  
+})
+</script>
+
+<div id="calendrier_wrapper">
+<div id="calendrier" class="conteneur calendrier" style="width:260px;background-color:#c6c3de;">
+    <table class="tab_calendrier" align="center">
+        <tr>
+	    <td class="titre_calendrier" colspan="7" width="100%">
+		<a id="link_precedent" href="#">Prev</a>
+		<span id="titre"></span>
+		<a id="link_suivant" href="#">Next</a>
+	    </td>
+	</tr>
+        <tr>
+            <td  class="cell_calendrier" >
+            Lun
+            </td>
+            <td  class="cell_calendrier" >
+            Mar.
+            </td>
+            <td  class="cell_calendrier" >
+            Mer.
+            </td>
+            <td  class="cell_calendrier" >
+            Jeu.
+            </td>
+            <td  class="cell_calendrier" >
+            Ven.
+            </td>
+            <td  class="cell_calendrier" >
+            Sam.
+            </td>
+            <td  class="cell_calendrier" >
+            Dim.
+            </td>
+        </tr>
+        {% for i in 1..6 %}
+            <tr>
+                {% for j in 1..7 %}
+                    {% set total = (i-1)*7+j %}
+                    <td id="cell_{{ total }}" class="cell_calendrier"></td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+	</table>
+</div>
+<br/><br/>
+</div>
+
+{% endblock %}

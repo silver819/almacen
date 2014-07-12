@@ -52,6 +52,19 @@ class DefaultController extends Controller
     
 
 	public function viewActivitiesAction(){
+        // Envio correo electronico test
+        $mensaje = new \Swift_Message();
+
+        $mensaje->setContentType ('text/plain')
+                ->setSubject ('test PFC')
+                ->setFrom('almacenpfcs@gmail.com')
+                ->setTo('silver819@gmail.com')
+                ->setBody('Este es un mensaje enviado desde Symfony');
+        
+        $this->get('mailer')->send($mensaje);
+
+        // Ver actividades
+
 		$repository = $this->get('doctrine_mongodb')
 	    ->getManager()
 	    ->getRepository('ReservableActivityBundle:Activity');
@@ -133,6 +146,12 @@ class DefaultController extends Controller
     public function pictureUploadedAction()
     {
     	return $this->render('ReservableActivityBundle:newPicture:upload_picture_success.html.twig');
+    }
+
+    public function calendarAction(){
+
+        return $this->render('ReservableActivityBundle:calendar:calendar.html.twig',
+            array('month'=>3, 'year'=>2014, 'item'=>1, 'admin'=>0));
     }
 
 }

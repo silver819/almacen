@@ -1,0 +1,30 @@
+item:
+    pattern:  /
+    defaults: { _controller: "DpCalendarBundle:Item:index" }
+
+item_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DpCalendarBundle:Item:show" }
+
+item_new:
+    pattern:  /new
+    defaults: { _controller: "DpCalendarBundle:Item:new" }
+
+item_create:
+    pattern:  /create
+    defaults: { _controller: "DpCalendarBundle:Item:create" }
+    requirements: { _method: post }
+
+item_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "DpCalendarBundle:Item:edit" }
+
+item_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "DpCalendarBundle:Item:update" }
+    requirements: { _method: post }
+
+item_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "DpCalendarBundle:Item:delete" }
+    requirements: { _method: post }

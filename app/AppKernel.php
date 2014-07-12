@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Reservable\ActivityBundle\ReservableActivityBundle(),
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Dp\CalendarBundle\DpCalendarBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

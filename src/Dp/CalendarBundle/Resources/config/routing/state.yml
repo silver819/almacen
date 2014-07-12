@@ -1,0 +1,30 @@
+state:
+    pattern:  /
+    defaults: { _controller: "DpCalendarBundle:State:index" }
+
+state_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DpCalendarBundle:State:show" }
+
+state_new:
+    pattern:  /new
+    defaults: { _controller: "DpCalendarBundle:State:new" }
+
+state_create:
+    pattern:  /create
+    defaults: { _controller: "DpCalendarBundle:State:create" }
+    requirements: { _method: post }
+
+state_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "DpCalendarBundle:State:edit" }
+
+state_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "DpCalendarBundle:State:update" }
+    requirements: { _method: post }
+
+state_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "DpCalendarBundle:State:delete" }
+    requirements: { _method: post }

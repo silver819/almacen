@@ -1,0 +1,23 @@
+dp_calendar_homepage:
+    pattern:  /calendar
+    defaults: { _controller: DpCalendarBundle:Default:index }
+
+dp_calendar_ajax:
+    pattern:  /ajax_calendar
+    defaults: { _controller: DpCalendarBundle:Default:calendar }
+
+dp_calendar_admin:
+    pattern:  /calendar/admin
+    defaults: { _controller: DpCalendarBundle:Default:indexAdmin }
+
+dp_calendar_ajax_admin:
+    pattern:  /ajax_admin
+    defaults: { _controller: DpCalendarBundle:Default:ajaxAdmin }
+
+DpCalendarBundle_state:
+    resource: "@DpCalendarBundle/Resources/config/routing/state.yml"
+    prefix:   /calendar/admin/state
+    
+DpCalendarBundle_item:
+    resource: "@DpCalendarBundle/Resources/config/routing/item.yml"
+    prefix:   /calendar/admin/item

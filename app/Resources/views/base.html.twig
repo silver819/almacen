@@ -29,6 +29,9 @@
                 <a class="navbar-brand" href="{{ path('user_new_user_homepage') }}">Almacen</a>
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                     <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="{{ path('user_new_user_admin') }}">Mi cuenta</a>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}<strong class="caret"></strong>
                             </a>
@@ -52,13 +55,67 @@
         <section>
             <div class="container">
                 <div class="row clearfix">
-                    {% block content %}{% endblock %}
+                    <div class="col-md-8 column loginRegisterDiv">
+                        <div id="mainSearcher">
+                            <div id="tabs-container" class="block-tabs  widget-block-tabmain ">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#" data-toggle="tab">Buscar</a>
+                                    </li>
+                                </ul>
+                                <div class="menuContent">
+                                    Buscador
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 column">
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            Poner aquí algo (base.html linea 78)
+                        {% else %}
+                            <div id="loginRegisterDiv">
+                                <div id="tabs-container" class="block-tabs  widget-block-tabmain ">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#">Entrar</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('fos_user_registration_register') }}">Registrar</a>
+                                        </li>
+                                    </ul>
+                                    <div class="menuContent">
+                                        <div class="login">
+                                            {% render url('fos_user_security_login') %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="container">
+                        <div class="col-md-12 column carruselContent">
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
         <footer>
             <div class="wrapper-widget-block-footerlinks row-fluid span9 mediaFooter">
                 <div class="container">
+                    <p>Universidad de Cádiz</p>
                     <p>Cristina Sánchez García © 2014</p>
                 </div>
             </div>

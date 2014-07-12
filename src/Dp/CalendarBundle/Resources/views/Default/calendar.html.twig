@@ -1,0 +1,223 @@
+<script>
+    
+/*
+ * This file is part of the Symfocal Calendar v1.0.
+ *
+ * (c) Symfocal http://www.symfocal.com
+ * alban@symfocal.com
+ * 
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+    
+var gap = 0;//global variable to follow what months to display
+var month = {{ month }};
+var year = {{ year }};
+var item = {{ item }};//item is set to first element
+{% if admin %}
+    var clickMethod = 0;//defines click method to change states of bookings in admin
+{% endif %}
+    
+
+jQuery(document).ready(function() {
+    
+var cal1 = $('#cal1');
+var cal2 = $('#cal2');
+var cal3 = $('#cal3');
+var $select = $('#items_select');
+
+{% if admin %}
+    var $selectMethod = $('#states_select');//this is needed in admin to select click method applied for changing states
+{% endif %}
+
+$('#link_next').attr('onclick', '').click(function(e){e.preventDefault(); changeMonths(1)});
+$('#link_prev').attr('onclick', '').click(function(e){e.preventDefault(); changeMonths(-1)});
+    
+function fillCalendar(mois, annee, cal)
+{
+    cal.css('display', 'none');
+    cal.find('a').removeClass().unbind();//clear classes and events of <a> elements inside the calendar before applying the new styles and events based on ajax response
+    {% if admin == false %}
+    cal.find('a').click(function(e){e.preventDefault();});//prevents the page from moving if <a> elements from calendar are clicked outside of admin mode.
+    {% endif %}
+    
+    var url = "{{ path('dp_calendar_ajax') }}";
+    var id = cal.attr('id');
+    $.post(url,{
+        month: mois,
+        year: annee,
+        itemId: item
+       },function(data){
+            //the response is in the data variable
+            if(data.responseCode==200 )
+            {
+                var days_previous_month=data.days_previous_month;
+                var nb_days_prev=data.nb_days_prev;
+                $('#'+id+'_title').html(data.current_month);
+                var count=1;
+                while(count<43)
+                {
+                    {% if admin %}
+                    if(data.calendar[(count-1)].dates!="")//in admin, if the date is valid, we attach an action to change date state on the click event 
+                    {
+                        $('#'+id+'_cell_'+count).attr("title", data.calendar[(count-1)].dates).click(changeState);//This is a trick to pass an event to a non-anonymous function, which is not posible with the classic .click(function(e){myFunction()})
+                    }
+                    else
+                    {
+                        $('#'+id+'_cell_'+count).click(function(e){e.preventDefault();});
+                    }
+                    {% endif %}
+                    if(data.calendar[(count-1)].booked==-1) $('#'+id+'_cell_'+count).html(days_previous_month - nb_days_prev + count);
+                    else $('#'+id+'_cell_'+count).html(data.calendar[(count-1)].fill);
+                    if(data.calendar[(count-1)].booked==1) $('#'+id+'_cell_'+count).addClass(data.calendar[(count-1)].classe);
+                    else if(data.calendar[(count-1)].booked<0) $('#'+id+'_cell_'+count).addClass("dates_preview");
+                    count++;
+                }
+                cal.css('display', 'block');
+            }
+            else if(data.responseCode==400)//bad request
+            {
+                alert(data.message);
+            }
+            else
+            {
+            //any other error is treated here
+                alert("An unexpeded error occured.");
+           }
+       });
+    return false;
+}
+
+function changeMonths(step)//this function is set for displaying 3 months - to do: needs to be flexible based on number of months displayed
+{
+    gap = gap + step;
+    var newMonth = month + (3 * gap)%12;
+    var gapYear = (3 * gap)/12;
+    var newYear = year + gapYear - gapYear%1;
+    if (newMonth<=0)
+    {
+        newMonth+=12;
+    }
+    fillCalendar(newMonth-12*Math.floor((newMonth)/13), newYear+Math.floor((newMonth)/13), cal1);
+    fillCalendar(newMonth+1-12*Math.floor((newMonth+1)/13), newYear+Math.floor((newMonth+1)/13), cal2);
+    fillCalendar(newMonth+2-12*Math.floor((newMonth+2)/13), newYear+Math.floor((newMonth+2)/13), cal3);
+}
+
+$select.change(function () {//change months displayed when a new item is selected
+  $select.find("option:selected").each(function () {
+            item = $(this).val();//change the javascript global variable following the item selected
+            changeMonths(0);
+  });
+})
+
+{% if admin %}
+$selectMethod.change(function () {//change the click method in admin based on select drop down 
+  $selectMethod.find("option:selected").each(function () {
+            clickMethod = $(this).val();
+  });
+})
+
+function changeState(e)//admn function to change class of the date that has been clicked on based on the new state
+{
+    e.preventDefault();
+    var date = $(this).attr("title");
+    var id = $(this).attr("id");
+    var url = "{{ path('dp_calendar_ajax_admin') }}";
+    $.post(url,{
+        date: date,
+        id: id,
+        itemId: item,
+        clickMethod: clickMethod 
+       },function(data){
+            if(data.responseCode==200 ){
+                var id_returned = data.id_returned;
+                var date_returned = data.date_returned;
+                var state = data.state;
+                $('#'+id_returned).removeClass();
+                $('#'+id_returned).addClass(state);
+            }
+           else if(data.responseCode==400){//bad request
+                alert(data.message);
+           }
+           else{
+                alert("An unexpeded error occured.");
+           }
+       });
+}
+{% endif %}
+
+$(window).load(function(){//fill calendars for the first time once page is loaded
+    changeMonths(0);
+});
+
+
+});    
+</script>
+
+{% if admin %}
+<h1>Symfocal Administration</h1>
+<div id="symfocal_admin" class="shadow_effect">
+{% else %}
+<div id="symfocal" class="shadow_effect">
+{% endif %}
+
+    <div id="manager">
+        <div id="selects">
+            <select id="items_select">
+                {% for item in items %}
+                    <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+            </select>
+        
+            {% if admin %}
+                <select id="states_select">
+                    <option value="0">click through all states</option>
+                    {% for state in states %}
+                        <option value="{{ state.id }}">{{ state.name }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        </div>
+        
+        {% if admin %}
+            <div id="symfocal_admin_menu">
+                <ul>
+                    <li><a class="admin_menu_selected" href="{{ path('dp_calendar_admin') }}">Manage bookings</a></li>
+                    <li><a href="{{ path('item') }}">Manage items</a></li>
+                    <li><a href="{{ path('state') }}">Manage states</a></li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+    
+    <div id="control_nav">
+        <a id="link_prev" href="#">Prev</a>
+        <a id="link_next" href="#">Next</a>
+    </div>
+    
+    <div id="calendars_container">
+        {% include 'DpCalendarBundle:Default:cal.html.twig' with {'calId': 'cal1'} %}
+        {% include 'DpCalendarBundle:Default:cal.html.twig' with {'calId': 'cal2'} %}
+        {% include 'DpCalendarBundle:Default:cal.html.twig' with {'calId': 'cal3'} %}
+    </div>
+    
+    <div id="legend" class="calendar">
+        <table  align="center">
+            <tr>
+                <td class="title_calendar" colspan="2" width="100%">
+                    <span>Légende</span>
+                </td>
+            </tr>
+            {% for state in states %}
+                <tr>
+                    <td><a href="#" class="{{ state.class }}"></a></td>
+                    <td class="legend_calendar">{{ state.name }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td class="copyright" colspan="2" width="100%"><a href="http://www.symfocal.com">www.symfocal.com</a></td>
+            </tr>
+        </table>
+    </div>
+
+</div>

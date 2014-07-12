@@ -33,3 +33,7 @@ submitPicture:
 pictureUploaded:
     pattern: /picture-uploaded
     defaults: { _controller: ReservableActivityBundle:Default:pictureUploaded }
+
+instalationCalendar:
+    pattern: /calendar
+    defaults: { _controller: ReservableActivityBundle:Default:calendar }

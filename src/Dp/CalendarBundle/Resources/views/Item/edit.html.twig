@@ -1,0 +1,39 @@
+{% extends "DpCalendarBundle::layout.html.twig" %}
+
+{% block DpCalendar_body %}
+
+<h1>Symfocal Administration</h1>
+<div id="symfocal_admin" class="shadow_effect">
+        
+    <div id="manager">
+        <div id="symfocal_admin_menu">
+            <ul>
+                <li><a href="{{ path('dp_calendar_admin') }}">Manage bookings</a></li>
+                <li><a class="admin_menu_selected" href="{{ path('item') }}">Manage items</a></li>
+                <li><a href="{{ path('state') }}">Manage states</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>Item edit</h2>
+    
+    <form action="{{ path('item_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_widget(edit_form) }}
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+    </form>
+    
+    <p>
+        <a href="{{ path('item') }}">
+            Back to the list
+        </a>
+    </p>
+    <form action="{{ path('item_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button type="submit">Delete</button>
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "DpCalendarBundle::layout.html.twig" %}
+
+{% block DpCalendar_body %}
+
+<h1>Symfocal Administration</h1>
+<div id="symfocal_admin" class="shadow_effect">
+        
+    <div id="manager">
+        <div id="symfocal_admin_menu">
+            <ul>
+                <li><a href="{{ path('dp_calendar_admin') }}">Manage bookings</a></li>
+                <li><a class="admin_menu_selected" href="{{ path('item') }}">Manage items</a></li>
+                <li><a href="{{ path('state') }}">Manage states</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>Item list</h2>
+    
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('item_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.name }}</td>
+                <td>{{ entity.position }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('item_show', { 'id': entity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('item_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <p>
+        <a href="{{ path('item_new') }}">
+            Create a new item
+        </a>
+    </p>
+</div>
+
+{% endblock %}

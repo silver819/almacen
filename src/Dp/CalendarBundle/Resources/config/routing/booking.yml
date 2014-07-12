@@ -1,0 +1,30 @@
+booking:
+    pattern:  /
+    defaults: { _controller: "DpCalendarBundle:Booking:index" }
+
+booking_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DpCalendarBundle:Booking:show" }
+
+booking_new:
+    pattern:  /new
+    defaults: { _controller: "DpCalendarBundle:Booking:new" }
+
+booking_create:
+    pattern:  /create
+    defaults: { _controller: "DpCalendarBundle:Booking:create" }
+    requirements: { _method: post }
+
+booking_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "DpCalendarBundle:Booking:edit" }
+
+booking_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "DpCalendarBundle:Booking:update" }
+    requirements: { _method: post }
+
+booking_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "DpCalendarBundle:Booking:delete" }
+    requirements: { _method: post }

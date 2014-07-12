@@ -2,6 +2,10 @@ user_new_user_homepage:
     pattern:  /
     defaults: { _controller: UserNewUserBundle:Default:index }
 
+user_new_user_admin:
+    pattern:  /menu
+    defaults: { _controller: UserNewUserBundle:Default:admin }
+
 login_check:
     pattern: /login_check
     defaults: { _controller: UserNewUserBundle:Default:index }
