@@ -12,33 +12,6 @@
 	</style>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDLL5P2RZQGKixWd_9s2X1PAUyxrL7O8Qo&sensor=false"></script>
 
-    <script type="text/javascript">
-    	$( document ).ready(function() {
-		    var mapOptions = {
-			    center: new google.maps.LatLng(36.421421, -6.144711),
-			    zoom: 14,
-			    scrollwheel: false,
-			    mapTypeId: google.maps.MapTypeId.ROADMAP
-		    };
-		    var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
-	    });
-
-	    function codeAddress() {
-			var address = document.getElementById('address').value;
-			geocoder.geocode( { 'address': address}, function(results, status) {
-			    if (status == google.maps.GeocoderStatus.OK) {
-				    map.setCenter(results[0].geometry.location);
-			    	var marker = new google.maps.Marker({
-			        	map: map,
-			        	position: results[0].geometry.location
-			    	});
-			    } else {
-			    	alert('Geocode was not successful for the following reason: ' + status);
-			    }
-			  });
-			}
-    </script>
-
 	<ul class="nav nav-tabs">
 		<li>
 			<a href="{{ path('ViewActivities') }}">Mis actividades</a>
@@ -53,25 +26,115 @@
 
 			{{ form_errors(form) }}
 
-		    {{ form_row(form.name, {'label': 'Nombre', 'input_group': {'append': 'Abc'}}) }}
+		    {# {{ form_row(form.name, {'label': 'Nombre', 'input_group': {'append': 'Abc'}}) }} #}
+		    <div class="form-group">
+		    	<label class="control-label col-lg-2 required" for="activity_name">Nombre</label>
+		    	<div class="col-lg-10">
+		    		<div class="input-group">
+		    			<input id="activity_name" name="activity[name]" required="required" maxlength="255" pattern=".{3,}" class="form-control" type="text"><span class="input-group-addon">Abc</span>
+			    	</div>
+			    </div>
+			</div>
 		    <br/><br/>
 
-		    {{ form_row(form.price, {'label': 'Precio', 
-		    						 'input_group': {'append': ' € '},
-		    						 'label_col': 2, 
-		    						 'widget_col': 6}) }}
+		    {# {{ form_row(form.price, {'label': 'Precio', 'input_group': {'append': ' € '},'label_col': 2, 'widget_col': 6}) }} #}
+		    <div class="form-group">
+		    	<label class="control-label col-lg-2 required" for="activity_price">Precio</label>
+		    	<div class="col-lg-6">
+		    		<div class="input-group">
+		    			<input id="activity_price" name="activity[price]" required="required" class="form-control" type="text"><span class="input-group-addon"> € </span>
+		    		</div>
+		    	</div>
+		    </div>
 
-		    {{ form_row(form.typeRent, {'label': 'por',
-		    							'label_col': 1, 
-		    						 	'widget_col': 3}) }}
+			{# {{ form_row(form.typeRent, {'label': 'por','label_col': 1, 'widget_col': 3}) }} #}
+			<div class="form-group">
+				<label class="control-label col-lg-1 required" for="activity_typeRent">por</label>
+				<div class="col-lg-3">
+					<select id="activity_typeRent" name="activity[typeRent]" required="required" class="form-control">
+						<option value="hour">hora</option>
+						<option value="day">día</option>
+					</select>
+				</div>
+			</div>
 
 		    <br/>
-		    {#
-		    <div id="panel">
-		      <input id="address" type="textbox" value="Chiclana">
-		      <input type="button" value="Buscar" onclick="codeAddress()">
+		    
+		    <div class="form-group" id="panel">
+		    	<label class="control-label col-lg-2 required" for="activity_price">Dirección</label>
+		    	<div class="col-lg-10">
+		    		<div class="input-group">
+		    			<input id="address" type="textbox" value="Chiclana">
+		      			<input type="button" value="Buscar" onclick="codeAddress()">
+		    		</div>
+		    		
+		    	</div>
 		    </div>
-			<div id="map_canvas"></div>#}
+
+			<div id="map_canvas"></div>
+
+			<script>
+	            $(document).ready(function()
+	            {
+				    var mapOptions = {
+					    center: new google.maps.LatLng(36.421421, -6.144711),
+					    zoom: 14,
+					    scrollwheel: false,
+					    mapTypeId: google.maps.MapTypeId.ROADMAP
+				    };
+				    var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+	                map.setOptions({scrollwheel:false});
+
+	                google.maps.event.addListener(map, "dblclick", function(event)
+	                {
+	                    if (event){
+	                        var lat  = event.latLng.lat();
+	                        var long = event.latLng.lng()
+
+	                        var newLatLng = new google.maps.LatLng(lat, long);
+
+							var marker = new google.maps.Marker({
+							    position: newLatLng,
+							    map: map
+							});
+
+	                        document.getElementById("gLat").value	= lat;
+	                        document.getElementById("gLong").value	= long;
+	                    }
+	                });
+	            });
+
+	            function codeAddress() {
+	                var address  = document.getElementById('address').value;
+	                var geocoder = new google.maps.Geocoder();
+
+	                geocoder.geocode( { 'address': address}, function(results, status) {
+	                    if (status == google.maps.GeocoderStatus.OK) {
+	                    	var lat  		= results[0].geometry.location.lat();
+	                        var long 		= results[0].geometry.location.lng();
+	                        var newLatLng	= new google.maps.LatLng(lat, long);
+
+							var mapOptions = {
+							    center: newLatLng,
+							    zoom: 14,
+							    scrollwheel: false,
+							    mapTypeId: google.maps.MapTypeId.ROADMAP
+						    };
+						    var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+						    map.setOptions({scrollwheel:false});
+
+							var marker = new google.maps.Marker({
+							    position: newLatLng,
+							    map: map
+							});
+
+							document.getElementById("gLat").value	= lat;
+	                        document.getElementById("gLong").value	= long;
+
+	                    }s
+	                });
+	            }
+	        </script>
 
 			{{ form_row(form.ownerID) }}
 			{{ form_widget(form._token) }}

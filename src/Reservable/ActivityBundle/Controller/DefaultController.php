@@ -116,17 +116,6 @@ class DefaultController extends Controller
         
         $dm->flush();
 
-        /*
-        // The query
-        $repository = $this->get('doctrine_mongodb')
-        ->getManager()
-        ->getRepository('ReservableActivityBundle:Activity');
-        $all = $repository->findBy(
-            array('ownerID' => $this->get('security.context')->getToken()->getUser()->getId())
-        );
-
-        return $this->render('ReservableActivityBundle:Default:view_activities.html.twig', array('products'=>$all));
-        */
         return $this->redirect('view-instalations');
     }
 
