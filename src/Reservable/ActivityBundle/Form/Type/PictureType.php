@@ -12,6 +12,7 @@ class PictureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('picFile',  'file', array('required' => true));
+        $builder->add('activityID', 'hidden');
     }
 
     public function getName()

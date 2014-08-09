@@ -1,6 +1,44 @@
 {% extends '::admin.html.twig' %}
 
 {% block workZone %}
+
+	<style>
+		#map_canvas{
+			width:80%;
+			height:300px;
+			border: 1px solid #DDDDDD;
+			margin: 20px auto;
+		}
+	</style>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDLL5P2RZQGKixWd_9s2X1PAUyxrL7O8Qo&sensor=false"></script>
+
+    <script type="text/javascript">
+    	$( document ).ready(function() {
+		    var mapOptions = {
+			    center: new google.maps.LatLng(36.421421, -6.144711),
+			    zoom: 14,
+			    scrollwheel: false,
+			    mapTypeId: google.maps.MapTypeId.ROADMAP
+		    };
+		    var map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+	    });
+
+	    function codeAddress() {
+			var address = document.getElementById('address').value;
+			geocoder.geocode( { 'address': address}, function(results, status) {
+			    if (status == google.maps.GeocoderStatus.OK) {
+				    map.setCenter(results[0].geometry.location);
+			    	var marker = new google.maps.Marker({
+			        	map: map,
+			        	position: results[0].geometry.location
+			    	});
+			    } else {
+			    	alert('Geocode was not successful for the following reason: ' + status);
+			    }
+			  });
+			}
+    </script>
+
 	<ul class="nav nav-tabs">
 		<li>
 			<a href="{{ path('ViewActivities') }}">Mis actividades</a>
@@ -27,6 +65,13 @@
 		    							'label_col': 1, 
 		    						 	'widget_col': 3}) }}
 
+		    <br/>
+		    {#
+		    <div id="panel">
+		      <input id="address" type="textbox" value="Chiclana">
+		      <input type="button" value="Buscar" onclick="codeAddress()">
+		    </div>
+			<div id="map_canvas"></div>#}
 
 			{{ form_row(form.ownerID) }}
 			{{ form_widget(form._token) }}

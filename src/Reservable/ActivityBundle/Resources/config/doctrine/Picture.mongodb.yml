@@ -6,3 +6,5 @@ Reservable\ActivityBundle\Document\Picture:
             type: string
         picFile:
             type: file
+        activityID:
+            type: string

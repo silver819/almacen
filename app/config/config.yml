@@ -108,4 +108,4 @@ fos_user:
     user_class: UserNew\UserBundle\Document\User
     registration:
         form:
-            type: user_new_user_registration
+            type: user_new_user_registrationz

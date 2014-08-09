@@ -7,11 +7,7 @@ use Doctrine\Bundle\MongoDBBundle\Validator\Constraints\Unique as MongoDBUnique;
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-
-
 /**
- * Picture
- *
  * @MongoDB\Document
  */
 class Picture
@@ -23,33 +19,23 @@ class Picture
 
     /**
      * @MongoDB\Field(type="string")
-     *
-     * @Assert\NotBlank
-     * @Assert\Length(max="255")
      */
     private $picPath;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @MongoDB\Field(type="file")
      *
-     * @Assert\NotBlank
-     * @Assert\Length(max="255")
-     */
-    private $picTitle;
-
-    /**
-     * @MongoDB\Field(type="string")
-     *
-     * @Assert\NotBlank
-     * @Assert\Length(max="255")
-     */
-    private $picAlt;
-
-    /**
      * @Assert\File(maxSize="6000000")
-     *
      */
     private $picFile;
+
+    /**
+     * @MongoDB\Field(type="string")
+     *
+     * @Assert\NotBlank(message="Actividad no encontrada.")
+     * @MongoDB\ReferenceOne(targetDocument="Activity")
+     */
+    protected $activityID;
 
     /**
      * Get id
@@ -103,52 +89,6 @@ class Picture
         return $this->picPath;
     }
 
-    /**
-     * Set picTitle
-     *
-     * @param string $picTitle
-     * @return Picture
-     */
-    public function setPicTitle($picTitle)
-    {
-        $this->picTitle = $picTitle;
-
-        return $this;
-    }
-
-    /**
-     * Get picTitle
-     *
-     * @return string
-     */
-    public function getPicTitle()
-    {
-        return $this->picTitle;
-    }
-
-    /**
-     * Set picAlt
-     *
-     * @param string $picAlt
-     * @return Picture
-     */
-    public function setPicAlt($picAlt)
-    {
-        $this->picAlt = $picAlt;
-
-        return $this;
-    }
-
-    /**
-     * Get picAlt
-     *
-     * @return string
-     */
-    public function getPicAlt()
-    {
-        return $this->picAlt;
-    }
-
     public function getPicAbsoluteWebPath()
     {
         return null === $this->picPath
@@ -170,7 +110,7 @@ class Picture
 
     public function getUploadPicDir()
     {
-        return 'bundles/adminbundle/img/Pictures/';
+        return 'images/instalations/';
     }
     
     public function upload()
@@ -189,5 +129,27 @@ class Picture
 
         $this->picFile = null;
 
-    } 
+    }
+
+    /**
+     * Set setActivityID
+     *
+     * @param string $activityID
+     * @return self
+     */
+    public function setActivityID($ownerID)
+    {
+        $this->ownerID = $ownerID;
+        return $this;
+    }
+
+    /**
+     * Get getActivityID
+     *
+     * @return string $activityID
+     */
+    public function getActivityID()
+    {
+        return $this->ownerID;
+    }
 }

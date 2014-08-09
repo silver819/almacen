@@ -30,6 +30,14 @@ class Picture
     private $picFile;
 
     /**
+     * @MongoDB\Field(type="string")
+     *
+     * @Assert\NotBlank(message="Actividad no encontrada.")
+     * @MongoDB\ReferenceOne(targetDocument="Activity")
+     */
+    protected $activityID;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -121,5 +129,27 @@ class Picture
 
         $this->picFile = null;
 
+    }
+
+    /**
+     * Set setActivityID
+     *
+     * @param string $activityID
+     * @return self
+     */
+    public function setActivityID($activityID)
+    {
+        $this->activityID = $activityID;
+        return $this;
+    }
+
+    /**
+     * Get getActivityID
+     *
+     * @return string $activityID
+     */
+    public function getActivityID()
+    {
+        return $this->activityID;
     }
 }

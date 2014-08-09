@@ -19,24 +19,73 @@
 		{% else %}
 			{% for oneProduct in products %}
 				<div class="productView alert alert-warning">
-					<form action="{{ path('modifyActivities') }}" method="post">
-						<input type="hidden" name="productID" class="productID" value="{{ oneProduct.id }}">
-						
-						<span class="modifyDiv">
+					<a style="float:left" id="modal-link-image-{{ oneProduct.id }}" href="#modal-image-{{ oneProduct.id }}" role="button" class="btn" data-toggle="modal">
+						{% if arrayPictures[oneProduct.id] is defined %}
+							<img src="{{ asset(arrayPictures[oneProduct.id]) }}" width="100">
+						{% else %}
+							<span id="pic-{{ oneProduct.id }}"></span>
+							{% if oneProduct.typeRent == 'hour' %}
+								<img src="{{ asset('images/football96.png') }}" width="100">
+							{% elseif oneProduct.typeRent == 'day' %}
+								<img src="{{ asset('images/house112.png') }}" width="100">
+							{% endif %}
+						{% endif %}
+					</a>
+	
+					{# Modal imagen #}
+					<div class="modal fade" id="modal-image-{{ oneProduct.id }}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<h4 class="modal-title" id="myModalLabel">Actualizar imagen principal</h4>
+								</div>
+								<div class="modal-body">
+									<form action="{{ path('submitPicture') }}" method="post" enctype="multipart/form-data">
+									    <div class="form-group">
+									    	<input id="picture_picFile" name="picture[picFile]" required="required" type="file" value=>
+									    </div>
+									    <input id="picture_activityID" name="picture[activityID]" class="form-control" value="{{ oneProduct.id }}" type="hidden">
+										<div class="text-center"> 
+										   	<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-inbox"></i>&nbsp;Actualizar</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{# Modal detalles #}
+					<div class="modal fade" id="modal-details-{{ oneProduct.id }}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<h4 class="modal-title" id="myModalLabel">Actualizar imagen principal</h4>
+								</div>
+								<div class="modal-body">
+									<form action="{{ path('modifyActivities') }}" method="post">
+										<input type="hidden" name="productID" class="productID" value="{{ oneProduct.id }}">
+										Nombre: <input type="text" name="newName"><br/>
+							       		Precio: <input type="text" name="newPrice">
+							       		<br/><br/>
+							       		<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-inbox"></i>&nbsp;Actualizar</button>
+				       				</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					
+					<span class="modifyDiv">
+						<a style="float:left" id="modal-link-details-{{ oneProduct.id }}" href="#modal-details-{{ oneProduct.id }}" role="button" class="btn" data-toggle="modal">
 							<img src="{{ asset('images/drawing4.png') }}" width="15" alt="Modificar actividad" title="Modificar actividad">
-						</span>
+						</a>
+					</span>
 
-			       		<h4><strong>{{ oneProduct.name }}</strong></h4>
-			       		{{ oneProduct.price }} / {{ oneProduct.typeRent }}
-
-			       		<div class="modifyForm" id="{{ oneProduct.id }}">
-			       			<br/><hr/><br/>
-			       			Nombre: <input type="text" name="newName"><br/>
-			       			Precio: <input type="text" name="newPrice">
-			       			<br/><br/>
-			       			<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-inbox"></i>&nbsp;Actualizar</button>
-			       		</div>
-			       	</form>
+			       	<h4><strong>{{ oneProduct.name }}</strong></h4>
+			       	{{ oneProduct.price }} / {{ oneProduct.typeRent }}
+					<div style="clear:both;"></div>
 			    </div>
 			{% endfor %}
 		{% endif %}

@@ -1,3 +1,7 @@
+reservable_searcher:
+    resource: "@ReservableSearcherBundle/Resources/config/routing.yml"
+    prefix:   /
+
 reservable_activity:
     resource: "@ReservableActivityBundle/Resources/config/routing.yml"
     prefix:   /

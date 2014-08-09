@@ -74,12 +74,24 @@ class DefaultController extends Controller
 	    ->getManager()
 	    ->getRepository('ReservableActivityBundle:Activity');
 
+        $imagesRepositoty = $this->get('doctrine_mongodb')
+        ->getManager()
+        ->getRepository('ReservableActivityBundle:Picture');
+
 		// The query
 		$product = $repository->findBy(
     		array('ownerID' => $this->get('security.context')->getToken()->getUser()->getId())
     	);
 
-		return $this->render('ReservableActivityBundle:Default:view_activities.html.twig', array('products'=>$product));
+        foreach($product as $one){
+            $image = $imagesRepositoty->findBy(array('activityID' => $one->getId()));
+
+            foreach($image as $theImage){
+                $arrayPictures[$one->getId()] = $theImage->getPicPath();
+            }
+        }
+
+		return $this->render('ReservableActivityBundle:Default:view_activities.html.twig', array('products'=>$product, 'arrayPictures'=>$arrayPictures));
 	}
 
     public function modifyActivitiesAction(){
@@ -104,6 +116,7 @@ class DefaultController extends Controller
         
         $dm->flush();
 
+        /*
         // The query
         $repository = $this->get('doctrine_mongodb')
         ->getManager()
@@ -113,11 +126,14 @@ class DefaultController extends Controller
         );
 
         return $this->render('ReservableActivityBundle:Default:view_activities.html.twig', array('products'=>$all));
+        */
+        return $this->redirect('view-instalations');
     }
 
 	public function uploadFileAction()
     {
 		$picture 		= new Picture();
+        $picture->setActivityID('539d677622c0e7fd0d0ad377');
 		$pictureType 	= new PictureType();
 
 		$form = $this->createForm($pictureType, $picture);
@@ -128,6 +144,7 @@ class DefaultController extends Controller
 
     public function submitUploadFileAction()
     {
+
     	$dm = $this->get('doctrine_mongodb')->getManager();
 
 	    $form = $this->createForm(new PictureType());
@@ -141,7 +158,8 @@ class DefaultController extends Controller
 	        $dm->persist($picture);
 	        $dm->flush();
 
-			return $this->redirect('picture-uploaded');
+			//return $this->redirect('picture-uploaded');
+            return $this->redirect('view-instalations');
 	    }
 
 	    return $this->render('ReservableActivityBundle:newPicture:upload_picture_form.html.twig', 
