@@ -38,7 +38,7 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-									<h4 class="modal-title" id="myModalLabel">Actualizar imagen principal</h4>
+									<h4 class="modal-title" id="myModalLabel">Imagen {{ oneProduct.name }}</h4>
 								</div>
 								<div class="modal-body">
 									<form action="{{ path('submitPicture') }}" method="post" enctype="multipart/form-data">
@@ -61,7 +61,7 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-									<h4 class="modal-title" id="myModalLabel">Actualizar imagen principal</h4>
+									<h4 class="modal-title" id="myModalLabel">Características {{ oneProduct.name }}</h4>
 								</div>
 								<div class="modal-body">
 									<form action="{{ path('modifyActivities') }}" method="post">
@@ -84,7 +84,7 @@
 					</span>
 
 			       	<h4><strong>{{ oneProduct.name }}</strong></h4>
-			       	{{ oneProduct.price }} / {{ oneProduct.typeRent }}
+			       	{{ oneProduct.price }} &euro;/ {{ oneProduct.typeRent }}
 					<div style="clear:both;"></div>
 			    </div>
 			{% endfor %}
