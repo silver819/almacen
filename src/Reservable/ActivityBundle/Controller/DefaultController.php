@@ -131,6 +131,40 @@ class DefaultController extends Controller
         return $this->redirect('view-instalations');
     }
 
+    public function activeActivityAction(){
+        foreach($_POST as $key => $value){
+            if($key == 'productID'){
+                $id = $value;
+            }
+        }
+
+        $dm      = $this->get('doctrine_mongodb')->getManager();
+        $product = $dm->getRepository('ReservableActivityBundle:Activity')->find($id);
+
+        $product->setActive();
+        
+        $dm->flush();
+
+        return $this->redirect('view-instalations');
+    }
+
+    public function deactiveActivityAction(){
+        foreach($_POST as $key => $value){
+            if($key == 'productID'){
+                $id = $value;
+            }
+        }
+
+        $dm      = $this->get('doctrine_mongodb')->getManager();
+        $product = $dm->getRepository('ReservableActivityBundle:Activity')->find($id);
+
+        $product->setDeactive();
+        
+        $dm->flush();
+
+        return $this->redirect('view-instalations');
+    }
+
 	public function uploadFileAction()
     {
 		$picture 		= new Picture();

@@ -2,6 +2,8 @@ Reservable\ActivityBundle\Document\Activity:
     fields:
         id:
             id:  true
+        active:
+            type: int
         name:
             type: string
         price:

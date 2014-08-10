@@ -75,6 +75,11 @@ class Activity
     protected $description;
 
     /**
+     * @MongoDB\Field(type="int")
+     */
+    protected $active;
+
+    /**
      * Get id
      *
      * @return id $id
@@ -257,6 +262,38 @@ class Activity
     public function setDescription($description)
     {
         $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return int $active
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * Set active
+     *
+     * @return int
+     */
+    public function setActive()
+    {
+        $this->active = 1;
+        return $this;
+    }
+
+    /**
+     * Set deactive
+     *
+     * @return int
+     */
+    public function setDeactive()
+    {
+        $this->active = 0;
         return $this;
     }
 }

@@ -104,7 +104,67 @@
 						</div>
 					</div>
 
+					{# Modal activar #}
+					<div class="modal fade" id="modal-active-{{ oneProduct.id }}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<h4 class="modal-title" id="myModalLabel">Activar {{ oneProduct.name }}</h4>
+								</div>
+								<div class="modal-body">
+									<form action="{{ path('activeActivity') }}" method="post">
+										<input type="hidden" name="productID" class="productID" value="{{ oneProduct.id }}">
+										¿Realmente desea activar {{ oneProduct.name }}?
+										<br/>
+										Si activa este producto, saldrá en las búsquedas y será reservable por cualquier usuario.
+										<br/>
+										<div style="margin: 20px auto 0px;text-align: center;">
+											<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok"></i>&nbsp;Activar</button>
+											<button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>&nbsp;Cancelar</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{# Modal desactivar #}
+					<div class="modal fade" id="modal-deactive-{{ oneProduct.id }}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<h4 class="modal-title" id="myModalLabel">Desactivar {{ oneProduct.name }}</h4>
+								</div>
+								<div class="modal-body">
+									<form action="{{ path('deactiveActivity') }}" method="post">
+										<input type="hidden" name="productID" class="productID" value="{{ oneProduct.id }}">
+										¿Realmente desea desactivar {{ oneProduct.name }}?
+										<br/>
+										Si desactiva este producto, no saldrá en las búsquedas y no podrá ser reservado.
+										<br/>
+										<div style="margin: 20px auto 0px;text-align: center;">
+											<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok"></i>&nbsp;Desactivar</button>
+											<button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>&nbsp;Cancelar</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<span class="modifyDiv">
+						{% if oneProduct.active == 1 %}
+							<a style="float:left" id="modal-link-deactive-{{ oneProduct.id }}" href="#modal-deactive-{{ oneProduct.id }}" role="button" class="btn" data-toggle="modal">
+								<i style="color:green;" class="glyphicon glyphicon-eye-open" title="Activo"></i>
+							</a>
+						{% else %}
+							<a style="float:left" id="modal-link-active-{{ oneProduct.id }}" href="#modal-active-{{ oneProduct.id }}" role="button" class="btn" data-toggle="modal">
+								<i style="color:grey;" class="glyphicon glyphicon-eye-close" title="Desactivo"></i>
+							</a>
+						{% endif %}
+						<br/>
 						<a style="float:left" id="modal-link-details-{{ oneProduct.id }}" href="#modal-details-{{ oneProduct.id }}" role="button" class="btn" data-toggle="modal">
 							<i style="color:blue;" class="glyphicon glyphicon-edit" title="Modificar actividad"></i>
 						</a>

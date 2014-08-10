@@ -22,6 +22,7 @@ class ActivityType extends AbstractType
         $builder->add('address');
         $builder->add('lat', 'hidden');
         $builder->add('long', 'hidden');
+        $builder->add('active', 'hidden')
     }
 
     public function getName()

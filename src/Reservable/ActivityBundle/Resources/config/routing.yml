@@ -41,3 +41,11 @@ instalationCalendar:
 deleteActivity:
     pattern: /delete-activity
     defaults: { _controller: ReservableActivityBundle:Default:deleteActivity }
+
+activeActivity:
+    pattern: /acive-activity
+    defaults: { _controller: ReservableActivityBundle:Default:activeActivity }
+
+deactiveActivity:
+    pattern: /deacive-activity
+    defaults: { _controller: ReservableActivityBundle:Default:deactiveActivity }
