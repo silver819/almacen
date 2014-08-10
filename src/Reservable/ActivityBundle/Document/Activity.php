@@ -51,6 +51,28 @@ class Activity
      */
     protected $typeRent;
 
+        /**
+     * @MongoDB\Field(type="address")
+     *
+     * @Assert\NotBlank(message="Indique la dirección")
+     */
+    protected $address;
+
+    /**
+     * @MongoDB\Field(type="float")
+     *
+     */
+    protected $lat;
+
+    /**
+     * @MongoDB\Field(type="float")
+     */
+    protected $long;
+
+    /**
+     * @MongoDB\Field(type="string")
+     */
+    protected $description;
 
     /**
      * Get id
@@ -148,5 +170,93 @@ class Activity
     public function gettypeRent()
     {
         return $this->typeRent;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string $address
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return string
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * Get lat
+     *
+     * @return float $lat
+     */
+    public function getLat()
+    {
+        return $this->lat;
+    }
+
+    /**
+     * Set lat
+     *
+     * @param float $lat
+     * @return float
+     */
+    public function setLat($lat)
+    {
+        $this->lat = $lat;
+        return $this;
+    }
+
+    /**
+     * Get long
+     *
+     * @return float $long
+     */
+    public function getLong()
+    {
+        return $this->long;
+    }
+
+    /**
+     * Set long
+     *
+     * @param float $long
+     * @return float
+     */
+    public function setLong($long)
+    {
+        $this->long = $long;
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string $description
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return string
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
     }
 }

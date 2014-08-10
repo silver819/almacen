@@ -35,7 +35,8 @@
 			    	</div>
 			    </div>
 			</div>
-		    <br/><br/>
+
+			<div style="clear: both; height: 10px;"></div>
 
 		    {# {{ form_row(form.price, {'label': 'Precio', 'input_group': {'append': ' € '},'label_col': 2, 'widget_col': 6}) }} #}
 		    <div class="form-group">
@@ -58,18 +59,27 @@
 				</div>
 			</div>
 
-		    <br/>
+			<div style="clear: both; height: 10px;"></div>
+
+			{# {{ form_row(form.description) }} #}
+			<div class="form-group">
+				<label class="control-label col-lg-2 required" for="activity_description">Descripción</label>
+				<div class="col-lg-10">
+					<textarea id="activity_description" name="activity[description]" required="required" class="form-control" type="text" rows="3"></textarea>
+				</div>
+			</div>
+
+		    <div style="clear: both; height: 10px;"></div>
 		    
-		    <div class="form-group" id="panel">
-		    	<label class="control-label col-lg-2 required" for="activity_price">Dirección</label>
-		    	<div class="col-lg-10">
-		    		<div class="input-group">
-		    			<input id="address" type="textbox" value="Chiclana">
-		      			<input type="button" value="Buscar" onclick="codeAddress()">
-		    		</div>
-		    		
-		    	</div>
-		    </div>
+			{# {{ form_row(form.address) }} #}
+			<div class="form-group" id="panel">
+				<label class="control-label col-lg-2 required" for="activity_address">Dirección</label>
+				<div class="col-lg-10">
+					<input id="activity_address" name="activity[address]" required="required" class="form-control" type="text" value="Chiclana">
+				</div>
+			</div>
+
+			<input type="button" value="Buscar" onclick="codeAddress()">
 
 			<div id="map_canvas"></div>
 
@@ -105,7 +115,7 @@
 	            });
 
 	            function codeAddress() {
-	                var address  = document.getElementById('address').value;
+	                var address  = document.getElementById('activity_address').value;
 	                var geocoder = new google.maps.Geocoder();
 
 	                geocoder.geocode( { 'address': address}, function(results, status) {
@@ -128,14 +138,16 @@
 							    map: map
 							});
 
-							document.getElementById("gLat").value	= lat;
-	                        document.getElementById("gLong").value	= long;
+							document.getElementById("activity_lat").value	= lat;
+	                        document.getElementById("activity_long").value	= long;
 
 	                    }s
 	                });
 	            }
 	        </script>
 
+	        {{ form_row(form.lat) }}
+			{{ form_row(form.long) }}
 			{{ form_row(form.ownerID) }}
 			{{ form_widget(form._token) }}
 

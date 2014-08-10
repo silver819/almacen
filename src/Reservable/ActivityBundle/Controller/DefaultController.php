@@ -105,17 +105,29 @@ class DefaultController extends Controller
             else if($key == 'newName' && !empty($value) && is_string($value)){
                 $name = $value;
             }
+            else if($key == 'description' && !empty($value) && is_string($value)){
+                $description = $value;
+            }
+            else if($key == 'address' && !empty($value) && is_string($value)){
+                $address = $value;
+            }
         }
 
 
         $dm      = $this->get('doctrine_mongodb')->getManager();
         $product = $dm->getRepository('ReservableActivityBundle:Activity')->find($id);
 
-        if(!empty($price)) $product->setPrice($price);
-        if(!empty($name))  $product->setName($name);
+        if(!empty($price))          $product->setPrice($price);
+        if(!empty($name))           $product->setName($name);
+        if(!empty($description))    $product->setDescription($description);
+        if(!empty($address))        $product->setAddress($address);
         
         $dm->flush();
 
+        return $this->redirect('view-instalations');
+    }
+
+    public function deleteActivityAction(){
         return $this->redirect('view-instalations');
     }
 

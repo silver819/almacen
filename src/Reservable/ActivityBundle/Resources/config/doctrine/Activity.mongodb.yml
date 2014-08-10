@@ -10,3 +10,11 @@ Reservable\ActivityBundle\Document\Activity:
             type: string
         ownerID:
             type: string
+        address:
+            type: string
+        lat:
+            type: float
+        long:
+            type: float
+        description:
+            type: string

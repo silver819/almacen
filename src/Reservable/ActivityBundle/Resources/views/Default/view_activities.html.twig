@@ -19,7 +19,7 @@
 		{% else %}
 			{% for oneProduct in products %}
 				<div class="productView alert alert-warning">
-					<a style="float:left" id="modal-link-image-{{ oneProduct.id }}" href="#modal-image-{{ oneProduct.id }}" role="button" class="btn" data-toggle="modal">
+					<a style="float:left" id="modal-link-image-{{ oneProduct.id }}" href="#modal-image-{{ oneProduct.id }}" role="button" class="btn" data-toggle="modal" title="Cambiar imagen">
 						{% if arrayPictures[oneProduct.id] is defined %}
 							<img src="{{ asset(arrayPictures[oneProduct.id]) }}" width="100">
 						{% else %}
@@ -47,7 +47,7 @@
 									    </div>
 									    <input id="picture_activityID" name="picture[activityID]" class="form-control" value="{{ oneProduct.id }}" type="hidden">
 										<div class="text-center"> 
-										   	<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-inbox"></i>&nbsp;Actualizar</button>
+										   	<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-save"></i>&nbsp;Actualizar</button>
 										</div>
 									</form>
 								</div>
@@ -66,25 +66,58 @@
 								<div class="modal-body">
 									<form action="{{ path('modifyActivities') }}" method="post">
 										<input type="hidden" name="productID" class="productID" value="{{ oneProduct.id }}">
-										Nombre: <input type="text" name="newName"><br/>
-							       		Precio: <input type="text" name="newPrice">
-							       		<br/><br/>
-							       		<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-inbox"></i>&nbsp;Actualizar</button>
+										<table style="width: 100%;">
+											<tr><td>Nombre:</td><td><input type="text" name="newName" value="{{ oneProduct.name }}" style="width: 100%;"></td></tr>
+							       			<tr><td>Precio:</td><td><input type="text" name="newPrice" value="{{ oneProduct.price }}" style="width: 100%;"></td></tr>
+							       			<tr><td>Descripcion:</td><td><textarea rows="3" name="description" style="width: 100%;">{{ oneProduct.description }}</textarea></td></tr>
+							       			<tr><td>Dirección:</td><td><input type="text" name="address" value="{{ oneProduct.address }}" style="width: 100%;"></td></tr>
+							       		</table>
+							       		<div style="margin: 20px auto 0px;text-align: center;">
+							       			<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-save"></i>&nbsp;Actualizar</button>
+							       		</div>
 				       				</form>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					
+					{# Modal eliminar #}
+					<div class="modal fade" id="modal-delete-{{ oneProduct.id }}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+									<h4 class="modal-title" id="myModalLabel">Eliminar {{ oneProduct.name }}</h4>
+								</div>
+								<div class="modal-body">
+									<form action="{{ path('deleteActivity') }}" method="post">
+										<input type="hidden" name="productID" class="productID" value="{{ oneProduct.id }}">
+										¿Realmente desea eliminar {{ oneProduct.name }} de su lista?
+										<br/>
+										<div style="margin: 20px auto 0px;text-align: center;">
+											<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok"></i>&nbsp;Eliminar</button>
+											<button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i>&nbsp;Cancelar</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<span class="modifyDiv">
 						<a style="float:left" id="modal-link-details-{{ oneProduct.id }}" href="#modal-details-{{ oneProduct.id }}" role="button" class="btn" data-toggle="modal">
-							<img src="{{ asset('images/drawing4.png') }}" width="15" alt="Modificar actividad" title="Modificar actividad">
+							<i style="color:blue;" class="glyphicon glyphicon-edit" title="Modificar actividad"></i>
+						</a>
+						<br/>
+						<a style="float:left" id="modal-link-delete-{{ oneProduct.id }}" href="#modal-delete-{{ oneProduct.id }}" role="button" class="btn" data-toggle="modal">
+							<i style="color:red;" class="glyphicon glyphicon-trash" title="Eliminar actividad"></i>
 						</a>
 					</span>
 
 			       	<h4><strong>{{ oneProduct.name }}</strong></h4>
-			       	{{ oneProduct.price }} &euro;/ {{ oneProduct.typeRent }}
+			       	<p>{{ oneProduct.price }} &euro;/ {{ oneProduct.typeRent }}</p>
+			       	<p>{{ oneProduct.description }}</p>
+
 					<div style="clear:both;"></div>
 			    </div>
 			{% endfor %}

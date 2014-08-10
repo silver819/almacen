@@ -13,11 +13,15 @@ class ActivityType extends AbstractType
     {
         $builder->add('name');
         $builder->add('price');
+        $builder->add('description');
         $builder->add('typeRent', 'choice', array(
             'choices'   => array('hour' => 'hora', 'day' => 'día'),
             'required'  => true,
         ));
         $builder->add('ownerID', 'hidden');
+        $builder->add('address');
+        $builder->add('lat', 'hidden');
+        $builder->add('long', 'hidden');
     }
 
     public function getName()

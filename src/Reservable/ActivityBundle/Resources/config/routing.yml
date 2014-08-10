@@ -37,3 +37,7 @@ pictureUploaded:
 instalationCalendar:
     pattern: /calendar
     defaults: { _controller: ReservableActivityBundle:Default:calendar }
+
+deleteActivity:
+    pattern: /delete-activity
+    defaults: { _controller: ReservableActivityBundle:Default:deleteActivity }
