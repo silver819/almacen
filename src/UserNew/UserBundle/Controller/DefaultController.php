@@ -8,7 +8,10 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('::base.html.twig', array());
+		$categories['Pistas'] 		= array('Futbol', 'Baloncesto', 'Tenis', 'Padel');
+		$categories['Inmuebles']	= array('Celebraciones', 'Estancia');
+
+        return $this->render('::base.html.twig', array('categories' => $categories));
     }
 
     public function adminAction()

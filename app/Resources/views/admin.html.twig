@@ -80,22 +80,22 @@
             {% if is_granted('ROLE_SUPER_ADMIN') %}
                 <h3>Menú superusuario</h3>
                 <ul class="adminList">
+                    <li><a href="#">Gestionar categorias</a></li>
                     <li><a href="#">Gestionar usuarios</a></li>
+                    <li><a href="#">Gestionar reservas</a></li>
                 </ul>
             {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <h3>Menú propietario</h3>
                 <ul class="adminList">
-                    <li><a href="{{ path('ViewActivities') }}">Mis instalaciones</a></li>
-                    <li><a href="">Mis reservas</a></li>
+                    <li><a href="{{ path('ViewActivities') }}">Gestionar instalaciones</a></li>
+                    <li><a href="">Gestionar reservas</a></li>
                 </ul>
             {% endif %}   
             {% if is_granted('ROLE_USER') %}
                 <h3>Menú usuario</h3>
                 <ul class="adminList">
-                    <li><a href="#">Fútbol</a></li>
-                    <li><a href="#">Tenis</a></li>
-                    <li><a href="#">Piscina</a></li>
+                    <li><a href="#">Mis reservas</a></li>
                 </ul>
            {% endif %}
         </div>
