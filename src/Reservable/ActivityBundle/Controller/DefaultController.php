@@ -128,6 +128,22 @@ class DefaultController extends Controller
     }
 
     public function deleteActivityAction(){
+        foreach($_POST as $key => $value){
+            if($key == 'productID'){
+                $id = $value;
+            }
+        }
+
+        $dm      = $this->get('doctrine_mongodb')->getManager();
+        $product = $dm->getRepository('ReservableActivityBundle:Activity')->find($id);
+        
+        if (!$product) {
+            throw $this->createNotFoundException('No se ha encontrado el producto '.$id);
+        }
+        
+        $dm->remove($product);
+        $dm->flush();
+
         return $this->redirect('view-instalations');
     }
 

@@ -1,0 +1,7 @@
+parameters:
+#    reservable_searcher.example.class: Reservable\SearcherBundle\Example
+
+services:
+#    reservable_searcher.example:
+#        class: %reservable_searcher.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -20,3 +20,5 @@ Reservable\ActivityBundle\Document\Activity:
             type: float
         description:
             type: string
+        feature:
+            type: string

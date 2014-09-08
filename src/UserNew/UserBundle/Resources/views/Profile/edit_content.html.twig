@@ -1,0 +1,12 @@
+{% extends '::admin.html.twig' %}
+
+{% block workZone %}
+<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+    
+    {{ form_widget(form) }}
+    
+    <div>
+        <input type="submit" value="Cambiar" />
+    </div>
+</form>
+{% endblock %}

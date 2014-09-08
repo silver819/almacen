@@ -9,6 +9,10 @@
 			border: 1px solid #DDDDDD;
 			margin: 20px auto;
 		}
+
+		#activity_typeRent_hour_div, #activity_typeRent_day_div{
+			display:none;
+		}
 	</style>
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDLL5P2RZQGKixWd_9s2X1PAUyxrL7O8Qo&sensor=false"></script>
 
@@ -38,18 +42,50 @@
 
 			<div style="clear: both; height: 10px;"></div>
 
+			{# {{ form_row(form.feature, {'label': 'Categoria'}) }} #} 
+
+			<div class="form-group">
+				<label class="control-label col-lg-2 required" for="activity_feature">Categoría</label>
+				<div class="col-lg-10">
+					<div><input id="activity_typeRent_hour" type="radio" name="activity[typeRent]" required="required" value="hour">Deportes</div>
+					<div id="activity_typeRent_hour_div">
+						&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="activity[feature]" required="required" value="futbol">Futbol
+						<input type="radio" name="activity[feature]" required="required" value="baloncesto">Baloncesto
+						<input type="radio" name="activity[feature]" required="required" value="tenis">Tenis
+						<input type="radio" name="activity[feature]" required="required" value="padel">Padel
+					</div>
+					<div><input id="activity_typeRent_day" type="radio" name="activity[typeRent]" required="required" value="day">Inmuebles</div>
+					<div id="activity_typeRent_day_div">
+						&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="activity[feature]" required="required" value="celebraciones">Celebraciones
+						<input type="radio" name="activity[feature]" required="required" value="estancia">Estancia
+					</div>
+				</div>
+			</div>
+
+			{#<div class="form-group">
+				<label class="control-label col-lg-2 required" for="activity_feature">Categoria</label>
+				<div class="col-lg-10">
+					<input id="activity_feature" name="activity[feature]" required="required" class="form-control" type="text">
+				</div>
+			</div>#}
+
+			<div style="clear: both; height: 10px;"></div>
+
 		    {# {{ form_row(form.price, {'label': 'Precio', 'input_group': {'append': ' € '},'label_col': 2, 'widget_col': 6}) }} #}
 		    <div class="form-group">
 		    	<label class="control-label col-lg-2 required" for="activity_price">Precio</label>
-		    	<div class="col-lg-6">
+		    	<div class="col-lg-10">
 		    		<div class="input-group">
-		    			<input id="activity_price" name="activity[price]" required="required" class="form-control" type="text"><span class="input-group-addon"> € </span>
+		    			<input id="activity_price" name="activity[price]" required="required" class="form-control" type="text">
+		    			<span class="input-group-addon" id="priceSpan"> € </span>
 		    		</div>
 		    	</div>
 		    </div>
 
 			{# {{ form_row(form.typeRent, {'label': 'por','label_col': 1, 'widget_col': 3}) }} #}
-			<div class="form-group">
+			{#<div class="form-group">
 				<label class="control-label col-lg-1 required" for="activity_typeRent">por</label>
 				<div class="col-lg-3">
 					<select id="activity_typeRent" name="activity[typeRent]" required="required" class="form-control">
@@ -57,7 +93,7 @@
 						<option value="day">día</option>
 					</select>
 				</div>
-			</div>
+			</div>#}
 
 			<div style="clear: both; height: 10px;"></div>
 
@@ -86,6 +122,17 @@
 			<script>
 	            $(document).ready(function()
 	            {
+					$('#activity_typeRent_hour').click(function(){
+	            		$('#activity_typeRent_hour_div').show('slow');
+	            		$('#activity_typeRent_day_div').hide('slow');
+	            		document.getElementById('priceSpan').innerHTML = ' € por hora ';
+	            	});
+	            	$('#activity_typeRent_day').click(function(){
+	            		$('#activity_typeRent_hour_div').hide('slow');
+	            		$('#activity_typeRent_day_div').show('slow');
+	            		document.getElementById('priceSpan').innerHTML = ' € por día ';
+	            	});
+
 				    var mapOptions = {
 					    center: new google.maps.LatLng(36.421421, -6.144711),
 					    zoom: 14,

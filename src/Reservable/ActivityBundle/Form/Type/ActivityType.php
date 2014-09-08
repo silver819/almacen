@@ -14,6 +14,14 @@ class ActivityType extends AbstractType
         $builder->add('name');
         $builder->add('price');
         $builder->add('description');
+        $builder->add('feature', 'choice', array(
+                        'choices' => array(
+                            'futbol' => 'Futbol',
+                            'baloncesto' => 'Baloncesto',
+                            'tenis' => 'Tenis',
+                            'padel' => 'Padel',
+                            'celebraciones' => 'Celebraciones',
+                            'estancia' => 'Estancia')));
         $builder->add('typeRent', 'choice', array(
             'choices'   => array('hour' => 'hora', 'day' => 'día'),
             'required'  => true,

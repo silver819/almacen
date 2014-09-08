@@ -51,7 +51,7 @@ class Activity
      */
     protected $typeRent;
 
-        /**
+    /**
      * @MongoDB\Field(type="address")
      *
      * @Assert\NotBlank(message="Indique la dirección")
@@ -78,6 +78,14 @@ class Activity
      * @MongoDB\Field(type="int")
      */
     protected $active;
+
+    /**
+     * @MongoDB\Field(type="feature")
+     *
+     * @Assert\NotBlank(message="Indique el tipo")
+     */
+    protected $feature;
+
 
     /**
      * Get id
@@ -295,5 +303,27 @@ class Activity
     {
         $this->active = 0;
         return $this;
+    }
+
+    /**
+     * Set feature
+     *
+     * @param string $feature
+     * @return self
+     */
+    public function setFeature($feature)
+    {
+        $this->feature = $feature;
+        return $this;
+    }
+
+    /**
+     * Get feature
+     *
+     * @return string $feature
+     */
+    public function getFeature()
+    {
+        return $this->feature;
     }
 }

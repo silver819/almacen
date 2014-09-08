@@ -1,0 +1,61 @@
+<style>
+	.thisInput{
+		display: block;
+		width: 100%;
+		height: 34px;
+		padding: 6px 12px;
+		font-size: 14px;
+		line-height: 1.42857;
+		color: #555;
+		vertical-align: middle;
+		background-color: #FFF;
+		background-image: none;
+		border: 1px solid #CCC;
+		border-radius: 4px;
+		box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+		transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+	}
+
+	.thisInput:focus {
+	    border-color: #66AFE9;
+	    outline: 0px none;
+	    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
+	}
+</style>
+<form method="POST" action="{{ path('displayResults') }}">
+	<table width="100%" class="text-left">
+	<tr>
+		<td>
+			<label><strong>Nombre</strong></label>
+			<br/>
+			<input class="thisInput" type="text" name="name">
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<br/>
+			<label><strong>Categoría</strong></label>
+			<br/>
+			{% for keyGroup, oneGroup in categories %}
+				<input type="radio" name="typeRent" value="{{ keyGroup }}">&nbsp;{{ keyGroup }}
+			{% endfor %}
+		</td>
+	</tr>
+	{% for keyGroup, oneGroup in categories %}
+		<tr>
+			<td>
+	    	{% for key, oneCategorie in oneGroup %}
+	    		<input type="checkbox" name="feature" value="{{ oneCategorie }}">{{ oneCategorie }}
+	        {% endfor %}
+	      </td>
+	  </tr>
+	{% endfor %}
+	<tr>
+		<td>
+			<div class="text-right"> 
+			   	<button value="Send" class="btn btn-success" type="submit"><i class="glyphicon glyphicon-inbox"></i>&nbsp;Go!</button>
+			</div>
+		</td>
+	<tr>
+	</table>
+</form>
